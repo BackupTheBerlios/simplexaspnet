@@ -4,6 +4,11 @@ using System.Web.Services.Protocols;
 
 public abstract class SimplexField : Matrix
 {
+
+    int pivotRow=-1;
+    int pivotColumn=-1;
+   
+
     public  void AddOptimize(int[] indexes)
     {
     }
@@ -31,5 +36,10 @@ public abstract class SimplexField : Matrix
     /// </summary>
     public  void SetBaseVariable(int index)
     {
+    }
+
+    public void Method()
+    {
+        throw new System.NotImplementedException();
     }
 }
