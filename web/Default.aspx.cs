@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
+using System.Drawing;
 
 public partial class _Default : System.Web.UI.Page 
 {
@@ -48,9 +49,10 @@ public partial class _Default : System.Web.UI.Page
 
         HtmlBuilder htmlBuilder = new HtmlBuilder(this.field);
         htmlBuilder.ShowHeader = true;
+        htmlBuilder.ForeColor = Color.Orange;
         Table table = htmlBuilder.GetTable();
-        
-        Controls.Add(table);
+
+        this.Panel1.Controls.Add(table);
 
         Application["field"] = this.field;
         

@@ -5,11 +5,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
     <title>Untitled Page</title>
+<script language="javascript" type="text/javascript">
+<!--
+
+function DIV1_onclick() {
+
+}
+
+// -->
+</script>
 </head>
 <body>
     <form id="form1" runat="server">
     <div>
-        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
+        &nbsp;
+        <div id="DIV1" style="z-index: 101; left: 107px; width: 485px; position: absolute;
+            top: 90px; height: 269px" language="javascript" onclick="return DIV1_onclick()">
+            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
+            <br />
+            <br />
+            <asp:Panel ID="Panel1" runat="server" Height="228px" Width="431px">
+            </asp:Panel>
+        </div>
     </div>
     </form>
 </body>
