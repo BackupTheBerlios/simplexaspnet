@@ -12,7 +12,16 @@ public class HtmlBuilder : IHtmlBuilder
 {
     private SimplexField field;
     private Table table;
-    private bool showHeader = false;
+    
+    private bool showColumnHeader = false;
+    private bool showRowHeader = false;
+
+    public bool ShowRowHeader
+    {
+        get { return showRowHeader; }
+        set { showRowHeader = value; }
+    }
+
     private Color foreColor = Color.Red;
 
     public Color ForeColor
@@ -21,10 +30,10 @@ public class HtmlBuilder : IHtmlBuilder
         set { foreColor = value; }
     }
 
-    public bool ShowHeader
+    public bool ShowColumnHeader
     {
-        get { return showHeader; }
-        set { showHeader = value; }
+        get { return showColumnHeader; }
+        set { showColumnHeader = value; }
     }
 
     public  HtmlBuilder(SimplexField _matrix)
@@ -47,32 +56,44 @@ public class HtmlBuilder : IHtmlBuilder
     {
         string tString = String.Empty;
 
-        tString = "<table>" + Environment.NewLine;
+        //tString = "<table>" + Environment.NewLine;
 
-        for (int i = 0; i < this.field.RowCount; i++)
-        {
-            Row row = this.field.GetRow(i);
-            tString += "<tr>" + Environment.NewLine;
-            for (int i2 = 0; i2 < row.Length; i2++)
-            {
-                tString += "<td>" + Environment.NewLine;
-                tString += (row.Values[i2]).ToString() + Environment.NewLine;
-                tString += "</td>" + Environment.NewLine;
-            }
+        //for (int i = 0; i < this.field.RowCount; i++)
+        //{
+        //    Row row = this.field.GetRow(i);
+        //    tString += "<tr>" + Environment.NewLine;
+        //    for (int i2 = 0; i2 < row.Length; i2++)
+        //    {
+        //        tString += "<td>" + Environment.NewLine;
+        //        tString += (row.Values[i2]).ToString() + Environment.NewLine;
+        //        tString += "</td>" + Environment.NewLine;
+        //    }
            
-            tString += "</tr>" + Environment.NewLine;
-        }
+        //    tString += "</tr>" + Environment.NewLine;
+        //}
 
-        tString += "</table>" + Environment.NewLine;
+        //tString += "</table>" + Environment.NewLine;
 
         return tString;
     }
 
+    /// <summary>
+    /// Creates a HTML table from a SimplexField
+    /// </summary>
+    /// <returns>HTML table</returns>
     public Table GetTable()
     {
-        if (this.ShowHeader == true)
+        if (this.ShowColumnHeader == true)
         {
             TableRow trow = new TableRow();
+
+            if (this.ShowRowHeader == true)
+            {
+                TableCell cell = new TableCell();
+                cell.Text = "";
+                trow.Cells.Add(cell);
+            }
+
             for (int i = 0; i < this.field.ColumnCount; i++)
             {
                 TableCell cell = new TableCell();
@@ -86,7 +107,20 @@ public class HtmlBuilder : IHtmlBuilder
 
         for (int i = 0; i < this.field.RowCount; i++)
         {
+
+           
+
             TableRow trow = new TableRow();
+
+            if (this.ShowRowHeader == true)
+            {
+                TableCell cell = new TableCell();
+                cell.Text = "x" + i.ToString();
+                if (i == this.field.PivotRow)
+                cell.BackColor = this.ForeColor;
+                trow.Cells.Add(cell);
+            }
+
             Row row = this.field.GetRow(i);
             for (int i2 = 0; i2 < row.Length; i2++)
             {

@@ -22,7 +22,9 @@ function DIV1_onclick() {
         <div id="DIV1" style="z-index: 101; left: 107px; width: 485px; position: absolute;
             top: 90px; height: 269px" language="javascript" onclick="return DIV1_onclick()">
             <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
-            <br />
+            Pivot Zeile:
+            <asp:TextBox ID="PivotRow" runat="server" Width="48px">1</asp:TextBox>Pivot Spalte:<asp:TextBox
+                ID="PivotColumn" runat="server" Width="38px">1</asp:TextBox><br />
             <br />
             <asp:Panel ID="Panel1" runat="server" Height="228px" Width="431px">
             </asp:Panel>

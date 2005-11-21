@@ -43,12 +43,13 @@ public partial class _Default : System.Web.UI.Page
         Row row = new Row(new double[] { 9, 9, 9, 9, 9 });
 
         this.field.AddRow(row);
-        this.field.PivotColumn = 1;
-        this.field.PivotRow = 1;
+        this.field.PivotColumn = Convert.ToInt32(this.PivotColumn.Text);
+        this.field.PivotRow = Convert.ToInt32(this.PivotRow.Text);
 
 
         HtmlBuilder htmlBuilder = new HtmlBuilder(this.field);
-        htmlBuilder.ShowHeader = true;
+        htmlBuilder.ShowColumnHeader = true;
+        htmlBuilder.ShowRowHeader = true;
         htmlBuilder.ForeColor = Color.Orange;
         Table table = htmlBuilder.GetTable();
 
