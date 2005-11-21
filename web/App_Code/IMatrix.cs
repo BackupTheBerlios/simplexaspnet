@@ -1,10 +1,6 @@
-﻿using System;
-public interface IMatrix
+﻿public interface IMatrix
 {
-    int RowCount
-    {
-        get;
-    }
+    int RowCount { get; }
 
     int AddRow(Row row);
 
@@ -17,6 +13,4 @@ public interface IMatrix
     void MultiplyRow(int sourceIndex, int destIndex, double factor);
 
     Row GetRow(int index);
-    
-    
 }

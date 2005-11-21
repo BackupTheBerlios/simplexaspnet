@@ -1,8 +1,4 @@
 using System;
-using System.Web;
-using System.Web.Services;
-using System.Web.Services.Protocols;
-using System.Collections.Generic;
 
 public class Row : Object, IComparable
 {
@@ -16,21 +12,18 @@ public class Row : Object, IComparable
 
     public double[] Values
     {
-        get { return values; }
-        set { values = value; }
+        get { return this.values; }
+        set { this.values = value; }
     }
 
     public int Length
     {
-        get
-        {
-            return this.values.Length;
-        }
+        get { return this.values.Length; }
     }
 
     public override bool Equals(object obj)
     {
-        return this.GetHashCode()==obj.GetHashCode();
+        return this.GetHashCode() == obj.GetHashCode();
     }
 
     public override int GetHashCode()
@@ -43,13 +36,13 @@ public class Row : Object, IComparable
             foreach (double value in this.values)
             {
                 if (i == 0)
-                    hashCode = (int)value * (i+1);
+                    hashCode = (int) value*(i + 1);
                 else
-                    hashCode ^= (int)(value *(i + 1));
+                    hashCode ^= (int) (value*(i + 1));
                 i++;
             }
         }
-        return (int)hashCode;
+        return (int) hashCode;
     }
 
 
@@ -57,10 +50,8 @@ public class Row : Object, IComparable
     {
         int returnValue = 0;
 
-        if (this.Values != ((Row)obj).Values)
+        if (this.Values != ((Row) obj).Values)
             returnValue = 1;
         return returnValue;
     }
-
-
 }

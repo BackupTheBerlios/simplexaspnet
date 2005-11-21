@@ -19,8 +19,15 @@ function DIV1_onclick() {
     <form id="form1" runat="server">
     <div>
         &nbsp;
-        <div id="DIV1" style="z-index: 101; left: 107px; width: 485px; position: absolute;
-            top: 90px; height: 269px" language="javascript" onclick="return DIV1_onclick()">
+        <asp:MultiView ID="MultiView1" runat="server">
+            <asp:View ID="View1" runat="server">
+                Anzahl der Variablen<asp:TextBox ID="VariablesTextBox" runat="server" Width="70px">5</asp:TextBox><br />
+                Anzahl der Basisvariablen<asp:TextBox ID="BaseVarsTextBox" runat="server" Width="52px">3</asp:TextBox><br />
+                <asp:Button ID="Button2" runat="server" Text="Start" OnClick="Button2_Click" /></asp:View>
+            <asp:View ID="View2" runat="server">
+                <br />
+            </asp:View>
+            <asp:View ID="View3" runat="server">
             <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
             Pivot Zeile:
             <asp:TextBox ID="PivotRow" runat="server" Width="48px">1</asp:TextBox>Pivot Spalte:<asp:TextBox
@@ -28,8 +35,13 @@ function DIV1_onclick() {
             <br />
             <asp:Panel ID="Panel1" runat="server" Height="228px" Width="431px">
             </asp:Panel>
-        </div>
-    </div>
+        </asp:View>
+        </asp:MultiView></div>
+        <asp:RadioButtonList ID="RadioButtonList1" runat="server" AutoPostBack="True" OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged">
+            <asp:ListItem Value="1">View 1</asp:ListItem>
+            <asp:ListItem Value="2">View 2</asp:ListItem>
+            <asp:ListItem Value="3">View 3</asp:ListItem>
+        </asp:RadioButtonList>
     </form>
 </body>
 </html>

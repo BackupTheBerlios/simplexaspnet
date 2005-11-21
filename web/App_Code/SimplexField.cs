@@ -1,10 +1,7 @@
-using System.Web;
-using System.Web.Services;
-using System.Web.Services.Protocols;
+using System;
 
 public class SimplexField : Matrix
 {
-
     #region -----------------------------------------------------------------------------
 
     private int pivotRow = -1;
@@ -14,37 +11,37 @@ public class SimplexField : Matrix
     #endregion --------------------------------------------------------------------------
 
     #region constructors ----------------------------------------------------------------
- 
+
     public SimplexField(int size)
     {
         this.ColumnCount = size;
     }
 
     #endregion --------------------------------------------------------------------------
-    
+
     #region properties ------------------------------------------------------------------
 
     public int PivotRow
     {
-        get { return pivotRow; }
-        set { pivotRow = value; }
+        get { return this.pivotRow; }
+        set { this.pivotRow = value; }
     }
 
     //-----------------------------------------------------------------------------------
 
     public int PivotColumn
     {
-        get { return pivotColumn; }
-        set { pivotColumn = value; }
+        get { return this.pivotColumn; }
+        set { this.pivotColumn = value; }
     }
-    
+
     //-----------------------------------------------------------------------------------
 
     public int ColumnCount
     {
-        get { return columnCount; }
-        set { columnCount = value; }
-    } 
+        get { return this.columnCount; }
+        set { this.columnCount = value; }
+    }
 
     #endregion
 
@@ -91,9 +88,8 @@ public class SimplexField : Matrix
 
     public void Method()
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 
     #endregion --------------------------------------------------------------------------
-    
 }

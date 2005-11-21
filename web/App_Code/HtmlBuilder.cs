@@ -1,50 +1,43 @@
 using System;
-using System.Web;
-using System.Web.Services;
-using System.Web.Services.Protocols;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
 using System.Drawing;
+using System.Web.UI.WebControls;
 
 public class HtmlBuilder : IHtmlBuilder
 {
     private SimplexField field;
     private Table table;
-    
+
     private bool showColumnHeader = false;
     private bool showRowHeader = false;
 
     public bool ShowRowHeader
     {
-        get { return showRowHeader; }
-        set { showRowHeader = value; }
+        get { return this.showRowHeader; }
+        set { this.showRowHeader = value; }
     }
 
     private Color foreColor = Color.Red;
 
     public Color ForeColor
     {
-        get { return foreColor; }
-        set { foreColor = value; }
+        get { return this.foreColor; }
+        set { this.foreColor = value; }
     }
 
     public bool ShowColumnHeader
     {
-        get { return showColumnHeader; }
-        set { showColumnHeader = value; }
+        get { return this.showColumnHeader; }
+        set { this.showColumnHeader = value; }
     }
 
-    public  HtmlBuilder(SimplexField _matrix)
+    public HtmlBuilder(SimplexField _matrix)
     {
-        this.table= new Table();
+        this.table = new Table();
         this.table.BorderStyle = BorderStyle.Solid;
         this.table.BorderWidth = 1;
         this.table.GridLines = GridLines.Both;
         this.field = _matrix;
     }
-
 
 
     public void Build(SimplexField _matrix)
@@ -68,7 +61,7 @@ public class HtmlBuilder : IHtmlBuilder
         //        tString += (row.Values[i2]).ToString() + Environment.NewLine;
         //        tString += "</td>" + Environment.NewLine;
         //    }
-           
+
         //    tString += "</tr>" + Environment.NewLine;
         //}
 
@@ -107,9 +100,6 @@ public class HtmlBuilder : IHtmlBuilder
 
         for (int i = 0; i < this.field.RowCount; i++)
         {
-
-           
-
             TableRow trow = new TableRow();
 
             if (this.ShowRowHeader == true)
@@ -117,7 +107,7 @@ public class HtmlBuilder : IHtmlBuilder
                 TableCell cell = new TableCell();
                 cell.Text = "x" + i.ToString();
                 if (i == this.field.PivotRow)
-                cell.BackColor = this.ForeColor;
+                    cell.BackColor = this.ForeColor;
                 trow.Cells.Add(cell);
             }
 
@@ -136,9 +126,5 @@ public class HtmlBuilder : IHtmlBuilder
         }
 
         return this.table;
-
     }
-
- 
-
 }

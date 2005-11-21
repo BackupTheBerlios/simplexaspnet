@@ -1,14 +1,6 @@
-using System.Web;
-using System.Web.Services;
-using System.Web.Services.Protocols;
-
 public interface ISimplex
 {
-    SimplexField Field
-    {
-        get;
-        set;
-    }
+    SimplexField Field { get; set; }
 
     /// <summary>
     /// finds the pivot column

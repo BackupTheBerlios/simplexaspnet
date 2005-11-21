@@ -1,9 +1,6 @@
 using System;
-using System.Web;
-using System.Web.Services;
-using System.Web.Services.Protocols;
 
-public class Simplex:ISimplex
+public class Simplex : ISimplex
 {
     private SimplexField field;
     private int pivotColumn;
@@ -11,7 +8,6 @@ public class Simplex:ISimplex
 
     public Simplex()
     {
-       
     }
 
     /// <summary>
@@ -70,6 +66,4 @@ public class Simplex:ISimplex
         this.FindPivotColumn();
         this.FindPivotRow();
     }
-
-
 }
