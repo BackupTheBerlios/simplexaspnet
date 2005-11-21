@@ -10,9 +10,7 @@ using System.Web.UI.HtmlControls;
 
 public partial class _Default : System.Web.UI.Page 
 {
-    private IMatrix matrix = new Matrix(5);
-
-    Table table2;
+    private SimplexField field = new SimplexField(5);
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -26,7 +24,7 @@ public partial class _Default : System.Web.UI.Page
 
             foreach (Row row in rows)
             {
-                this.matrix.AddRow(row);
+                this.field.AddRow(row);
             }
         }
 
@@ -35,22 +33,26 @@ public partial class _Default : System.Web.UI.Page
     protected void Button1_Click(object sender, EventArgs e)
     {
 
-        if (Application["matrix"] == null)
-            Application.Add("matrix",this.matrix);
+        if (Application["field"] == null)
+            Application.Add("field", this.field);
 
 
-        this.matrix = (Matrix)Application.Get("matrix");
+        this.field = (SimplexField)Application.Get("field");
 
         Row row = new Row(new double[] { 9, 9, 9, 9, 9 });
-        this.matrix.AddRow(row);
 
-        HtmlBuilder htmlBuilder = new HtmlBuilder(this.matrix);
+        this.field.AddRow(row);
+        this.field.PivotColumn = 1;
+        this.field.PivotRow = 1;
+
+
+        HtmlBuilder htmlBuilder = new HtmlBuilder(this.field);
 
         Table table = htmlBuilder.GetTable();
         
         Controls.Add(table);
 
-        Application["matrix"] = this.matrix;
+        Application["field"] = this.field;
 
 
         
