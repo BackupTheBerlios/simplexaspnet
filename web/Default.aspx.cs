@@ -47,14 +47,12 @@ public partial class _Default : System.Web.UI.Page
 
 
         HtmlBuilder htmlBuilder = new HtmlBuilder(this.field);
-
+        htmlBuilder.ShowHeader = true;
         Table table = htmlBuilder.GetTable();
         
         Controls.Add(table);
 
         Application["field"] = this.field;
-
-
         
     }
 }

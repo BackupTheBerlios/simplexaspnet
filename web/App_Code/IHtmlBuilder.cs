@@ -5,7 +5,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 interface IHtmlBuilder
 {
-    void Build(IMatrix matrix);
+    void Build(SimplexField field);
 
     string GetHtml();
 

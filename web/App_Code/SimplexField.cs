@@ -9,11 +9,19 @@ public class SimplexField : Matrix
 
     private int pivotRow = -1;
     private int pivotColumn = -1;
+    private int columnCount;
 
     #endregion --------------------------------------------------------------------------
 
-    
+    #region constructors ----------------------------------------------------------------
+ 
+    public SimplexField(int size)
+    {
+        this.ColumnCount = size;
+    }
 
+    #endregion --------------------------------------------------------------------------
+    
     #region properties ------------------------------------------------------------------
 
     public int PivotRow
@@ -31,7 +39,13 @@ public class SimplexField : Matrix
     }
     
     //-----------------------------------------------------------------------------------
-    
+
+    public int ColumnCount
+    {
+        get { return columnCount; }
+        set { columnCount = value; }
+    } 
+
     #endregion
 
     #region methods ---------------------------------------------------------------------
