@@ -13,6 +13,13 @@ public class HtmlBuilder : IHtmlBuilder
     private SimplexField field;
     private Table table;
     private bool showHeader = false;
+    private Color foreColor = Color.Red;
+
+    public Color ForeColor
+    {
+        get { return foreColor; }
+        set { foreColor = value; }
+    }
 
     public bool ShowHeader
     {
@@ -70,6 +77,8 @@ public class HtmlBuilder : IHtmlBuilder
             {
                 TableCell cell = new TableCell();
                 cell.Text = "x" + i.ToString();
+                if (i == this.field.PivotColumn)
+                    cell.BackColor = this.ForeColor;
                 trow.Cells.Add(cell);
             }
             this.table.Rows.Add(trow);
@@ -85,7 +94,7 @@ public class HtmlBuilder : IHtmlBuilder
                 cell.Text = (row.Values[i2]).ToString();
 
                 if (i == this.field.PivotRow || i2 == this.field.PivotColumn)
-                    cell.BackColor = Color.Red;
+                    cell.BackColor = this.ForeColor;
 
                 trow.Cells.Add(cell);
             }
