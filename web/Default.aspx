@@ -26,10 +26,11 @@ function DIV1_onclick() {
                 Anzahl der Basisvariablen<asp:TextBox ID="BaseVarsTextBox" runat="server" Width="52px">2</asp:TextBox><br />
                 <asp:Button ID="Button2" runat="server" Text="Start" OnClick="Button2_Click" /></asp:View>
             <asp:View ID="View2" runat="server">
+                &nbsp;
                 <br />
                 <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Feld erstellen" /></asp:View>
             <asp:View ID="View3" runat="server">
-            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
+            <asp:Button ID="Button1" runat="server"  Text="Button" />
             Pivot Zeile:
             <asp:TextBox ID="PivotRow" runat="server" Width="48px">1</asp:TextBox>Pivot Spalte:<asp:TextBox
                 ID="PivotColumn" runat="server" Width="38px">1</asp:TextBox><br />

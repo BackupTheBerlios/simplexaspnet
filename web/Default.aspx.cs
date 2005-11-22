@@ -5,39 +5,41 @@ using System.Web.UI.WebControls;
 
 public partial class _Default : Page 
 {
-    private SimplexField field = new SimplexField(5);
+    private SimplexField field;
 
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        //if (!IsPostBack)
+        if (Session["state"] == null)
         {
-            Row[] rows = new Row[2];
-            rows[0] = new Row(new double[] { 1, 2, 3, 4, 5 });
-            rows[1] = new Row(new double[] { 6, 7, 8, 9, 10 });
-            rows[1] = new Row(new double[] { 11, 12, 13, 14, 15 });
-
-            foreach (Row row in rows)
-            {
-                this.field.AddRow(row);
-            }
-        }
-
-        if (Application["state"]==null)
-        {
-            Application["state"] = "start";
+            Session["state"] = "start";
             this.MultiView1.SetActiveView(this.View1);
         }
 
     }
 
+    private void GenerateField()
+    {
+        this.field = new SimplexField(5);
+        Row[] rows = new Row[3];
+        rows[0] = new Row(new double[] { 1, 2, 3, 4, 5 });
+        rows[1] = new Row(new double[] { 6, 7, 8, 9, 10 });
+        rows[2] = new Row(new double[] { 11, 12, 13, 14, 15 });
+
+        foreach (Row row in rows)
+        {
+            this.field.AddRow(row);
+        }
+    }
+
     private void ShowView()
     {
-        string state = Application["state"] as string;
+        string state = Session["state"] as string;
        
         switch (state)
         {
             case "phase3":
+                this.GenerateField();
                 this.DrawField();
                 this.MultiView1.SetActiveView(this.View3);
                 break;
@@ -53,23 +55,24 @@ public partial class _Default : Page
         }
     }
 
-    protected void Button1_Click(object sender, EventArgs e)
-    {
-
-        DrawField();
-        
-    }
-
     private void DrawField()
     {
         Row row = new Row(new double[] { 9, 9, 9, 9, 9 });
         HtmlBuilder htmlBuilder;
 
-        if (Application["field"] == null)
-            Application.Add("field", this.field);
+        if (Session["field"] == null)
+            Session.Add("field", this.field);
 
 
-        this.field = (SimplexField)Application.Get("field");
+
+
+        this.field = (SimplexField) Session["field"];
+        
+        
+             if (this.field==null)
+            field = new SimplexField(5);
+        
+        
         this.field.AddRow(row);
         this.field.PivotColumn = Convert.ToInt32(this.PivotColumn.Text);
         this.field.PivotRow = Convert.ToInt32(this.PivotRow.Text);
@@ -82,8 +85,8 @@ public partial class _Default : Page
 
         this.Panel1.Controls.Add(table);
 
-        Application["field"] = this.field;
-        Application["state"] = "phase3";
+        Session["field"] = this.field;
+        Session["state"] = "phase3";
         this.ShowView();
     }
     protected void RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -105,7 +108,7 @@ public partial class _Default : Page
     }
     protected void Button2_Click(object sender, EventArgs e)
     {
-        Application["state"] = "phase2";
+        Session["state"] = "phase2";
         
         int x = Convert.ToInt32(this.VariablesTextBox.Text);
         int y = Convert.ToInt32(this.BaseVarsTextBox.Text);
@@ -151,12 +154,12 @@ public partial class _Default : Page
      }
     protected void Button3_Click(object sender, EventArgs e)
     {
-        Application["state"] = "phase3";
+        Session["state"] = "phase3";
         this.ShowView();
     }
     protected void Button4_Click(object sender, EventArgs e)
     {
-        Application["state"] = null;
-        this.ShowView();
+        Session["state"] = null;
+      //  this.ShowView();
     }
 }

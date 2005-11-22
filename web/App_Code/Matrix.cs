@@ -18,7 +18,8 @@ public class Matrix : IMatrix
 
     public int AddRow(Row row)
     {
-        this.array[index] = row;
+        //this.array[index] = row;
+        this.array.Add(this.index, row);
         return index++;
     }
 
