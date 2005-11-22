@@ -24,7 +24,7 @@ function DIV1_onclick() {
             <asp:View ID="View1" runat="server">
                 Anzahl der Variablen<asp:TextBox ID="VariablesTextBox" runat="server" Width="70px">4</asp:TextBox><br />
                 Anzahl der Basisvariablen<asp:TextBox ID="BaseVarsTextBox" runat="server" Width="52px">2</asp:TextBox><br />
-                <asp:Button ID="Button2" runat="server" Text="Start" OnClick="Button2_Click" /></asp:View>
+                <asp:Button ID="Button2" runat="server" Text="Start" OnClick="GenerateTextboxes" /></asp:View>
             <asp:View ID="View2" runat="server">
                 &nbsp;
                 <br />
@@ -39,11 +39,6 @@ function DIV1_onclick() {
             </asp:Panel>
         </asp:View>
         </asp:MultiView></div>
-        <asp:RadioButtonList ID="RadioButtonList1" runat="server" AutoPostBack="True" OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged">
-            <asp:ListItem Value="1">View 1</asp:ListItem>
-            <asp:ListItem Value="2">View 2</asp:ListItem>
-            <asp:ListItem Value="3">View 3</asp:ListItem>
-        </asp:RadioButtonList>
     </form>
 </body>
 </html>
