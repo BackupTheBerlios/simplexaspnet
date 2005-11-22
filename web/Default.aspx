@@ -19,14 +19,15 @@ function DIV1_onclick() {
     <form id="form1" runat="server">
     <div>
         &nbsp;
+        <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Reset" />
         <asp:MultiView ID="MultiView1" runat="server">
             <asp:View ID="View1" runat="server">
-                Anzahl der Variablen<asp:TextBox ID="VariablesTextBox" runat="server" Width="70px">5</asp:TextBox><br />
-                Anzahl der Basisvariablen<asp:TextBox ID="BaseVarsTextBox" runat="server" Width="52px">3</asp:TextBox><br />
+                Anzahl der Variablen<asp:TextBox ID="VariablesTextBox" runat="server" Width="70px">4</asp:TextBox><br />
+                Anzahl der Basisvariablen<asp:TextBox ID="BaseVarsTextBox" runat="server" Width="52px">2</asp:TextBox><br />
                 <asp:Button ID="Button2" runat="server" Text="Start" OnClick="Button2_Click" /></asp:View>
             <asp:View ID="View2" runat="server">
                 <br />
-            </asp:View>
+                <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Feld erstellen" /></asp:View>
             <asp:View ID="View3" runat="server">
             <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
             Pivot Zeile:

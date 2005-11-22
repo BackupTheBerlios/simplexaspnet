@@ -23,31 +23,48 @@ public partial class _Default : Page
             }
         }
 
+        if (Application["state"]==null)
+        {
+            Application["state"] = "start";
+            this.MultiView1.SetActiveView(this.View1);
+        }
+
+    }
+
+    private void ShowView()
+    {
         string state = Application["state"] as string;
        
         switch (state)
         {
             case "phase3":
+                this.DrawField();
                 this.MultiView1.SetActiveView(this.View3);
                 break;
             case "phase2":
                 this.MultiView1.SetActiveView(this.View2);
                 break;
             case "start":
+            case null:
             default:
                 Application["state"] = "start";
                 this.MultiView1.SetActiveView(this.View1);
                 break;
         }
-
     }
 
     protected void Button1_Click(object sender, EventArgs e)
     {
 
+        DrawField();
+        
+    }
+
+    private void DrawField()
+    {
         Row row = new Row(new double[] { 9, 9, 9, 9, 9 });
         HtmlBuilder htmlBuilder;
-        
+
         if (Application["field"] == null)
             Application.Add("field", this.field);
 
@@ -67,23 +84,23 @@ public partial class _Default : Page
 
         Application["field"] = this.field;
         Application["state"] = "phase3";
-        
+        this.ShowView();
     }
     protected void RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        switch (this.RadioButtonList1.SelectedValue)
-        {
-            case "3":
-                this.MultiView1.SetActiveView(this.View3);
-                break;
-            case "2":
-                this.MultiView1.SetActiveView(this.View2);
-                break;
-            case "1":
-            default:
-                this.MultiView1.SetActiveView(this.View1);
-                break;
-        }
+        //switch (this.RadioButtonList1.SelectedValue)
+        //{
+        //    case "3":
+        //        this.MultiView1.SetActiveView(this.View3);
+        //        break;
+        //    case "2":
+        //        this.MultiView1.SetActiveView(this.View2);
+        //        break;
+        //    case "1":
+        //    default:
+        //        this.MultiView1.SetActiveView(this.View1);
+        //        break;
+        //}
 
     }
     protected void Button2_Click(object sender, EventArgs e)
@@ -96,7 +113,7 @@ public partial class _Default : Page
 
         Table table = new Table();
         
-        for (int i = 0; i < y; i++)
+        for (int i = 0; i < y+1; i++)
         {
 
             TableRow trow = new TableRow();
@@ -106,7 +123,7 @@ public partial class _Default : Page
             {
                 TableCell cell = new TableCell();
                 Label label = new Label();
-                label.Text = "x" + i.ToString();
+                label.Text = "x" + (i2+1).ToString();
                 cell.Controls.Add(new TextBox());
                 cell.Controls.Add(label);
 
@@ -128,7 +145,18 @@ public partial class _Default : Page
         }
 
         this.View2.Controls.Add(table);
+        this.ShowView();
     
         
      }
+    protected void Button3_Click(object sender, EventArgs e)
+    {
+        Application["state"] = "phase3";
+        this.ShowView();
+    }
+    protected void Button4_Click(object sender, EventArgs e)
+    {
+        Application["state"] = null;
+        this.ShowView();
+    }
 }
