@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Drawing;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -10,15 +11,55 @@ public partial class _Default : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (!this.IsPostBack)
+        {
+            // Initialize controls number.
+            // Used to create control id
+            this.Session.Add("LastControl", 2);
+        }
+        else
+        {
+            // Recreate controls created on previous roundtrips
+            RecreatePersistedControls();
+        }
+
         if (Session["state"] == null)
         {
             Session["state"] = "start";
             this.MultiView1.SetActiveView(this.View1);
         }
-        if (this.VarTextBoxes != null)
-        {
-            int count = this.VarTextBoxes.Length;
-        }
+        //if (this.VarTextBoxes != null)
+        //{
+        //    int count = this.VarTextBoxes.Length;
+        //}
+    }
+
+    private const int TOP = 96;
+    private const int HEIGHT = 48;
+    private const int BUTTON_LEFT = 48;
+    private const int TEXTBOX_LEFT = 128;
+
+    private TextBox newTextBox(string id)
+    {
+        int lastControl = (int) this.Session["LastControl"];
+        int count = lastControl/2 + 1;
+        int top = TOP + HEIGHT*(count - 1);
+        ControlInfo ci = PersistControl("Button" + count.ToString(),
+                                        "Button",
+                                        top, BUTTON_LEFT,
+                                        "Click");
+
+        Button btn = (Button) CreateControl(ci);
+        btn.Text = "Button " + count.ToString();
+        ci = PersistControl(id,
+                            "TextBox",
+                            top, TEXTBOX_LEFT,
+                            "TextChanged");
+        TextBox textBox = (TextBox) CreateControl(ci);
+
+        this.Session["LastControl"] = count*2;
+
+        return textBox;
     }
 
     private void GenerateField()
@@ -35,9 +76,8 @@ public partial class _Default : Page
         //}
 
 
-        
         int columns = this.VarTextBoxes.Length;
-       
+
 
         this.field = new SimplexField(columns);
         Row[] rows = new Row[3];
@@ -121,9 +161,9 @@ public partial class _Default : Page
                 Label label = new Label();
 
 
-                VarTextBoxes[i2, i] = new TextBox();
+                VarTextBoxes[i2, i] = newTextBox("var[" + i2.ToString() + "," + i.ToString() + "]");
                 VarTextBoxes[i2, i].Width = 30;
-                VarTextBoxes[i2, i].ID = "var[" + i2.ToString() + "," + i.ToString() + "]";
+                //VarTextBoxes[i2, i].ID = "var[" + i2.ToString() + "," + i.ToString() + "]";
 
 
                 if (i2 == x)
@@ -153,7 +193,7 @@ public partial class _Default : Page
     protected void Button3_Click(object sender, EventArgs e)
     {
         Session["state"] = "phase3";
-        int count = this.VarTextBoxes.Length;
+        // int count = this.VarTextBoxes.Length;
         this.ShowView();
     }
 
@@ -161,5 +201,134 @@ public partial class _Default : Page
     {
         Session["state"] = null;
         //  this.ShowView();
+    }
+
+    // Call CreateControl for each persisted control
+    private void RecreatePersistedControls()
+    {
+        ArrayList al = (ArrayList) this.Session["DynamicControls"];
+        if (al != null)
+        {
+            foreach (ControlInfo ci in al)
+            {
+                this.CreateControl(ci);
+            }
+        }
+    }
+
+    #region Event Handlers for new controls
+
+    private void Button_Click(object sender, EventArgs e)
+    {
+        this.lblResult.Text = ((Button) sender).Text + " clicked";
+    }
+
+    private void TextBox_TextChanged(object sender, EventArgs e)
+    {
+        this.lblText.Text = ((TextBox) sender).Text + " text changed";
+    }
+
+    #endregion
+
+    // Set Event handler
+    private void AppendEvent(Control ctl, string handler)
+    {
+        switch (handler)
+        {
+            case "Click":
+                ((Button) ctl).Click += new EventHandler(this.Button_Click);
+                break;
+
+            case "TextChanged":
+                ((TextBox) ctl).TextChanged += new EventHandler(this.TextBox_TextChanged);
+                break;
+        }
+    }
+
+    private struct ControlInfo
+    {
+        public string ID;
+        public string Type;
+        public int Top;
+        public int Left;
+        public string EventHandler;
+    }
+
+    // Create ControlInfo structure and persist it to Session
+    private ControlInfo PersistControl(string id, string type,
+                                       int top, int left, string eventHandler)
+    {
+        ControlInfo ci = new ControlInfo();
+        ci.ID = id;
+        ci.Type = type;
+        ci.Top = top;
+        ci.Left = left;
+        ci.EventHandler = eventHandler;
+
+        ArrayList al = (ArrayList) this.Session["DynamicControls"];
+        if (al == null)
+        {
+            al = new ArrayList();
+        }
+        al.Add(ci);
+        this.Session["DynamicControls"] = al;
+        return ci;
+    }
+
+    // Create control specified by ControlInfo structure
+    private Control CreateControl(ControlInfo ci)
+    {
+        Control ctl = null;
+        switch (ci.Type)
+        {
+            case "Button":
+                ctl = new Button();
+                ((Button) ctl).Style["Position"] = "Absolute";
+                ((Button) ctl).Style["Top"] = ci.Top.ToString();
+                ((Button) ctl).Style["Left"] = ci.Left.ToString();
+                this.AppendEvent(ctl, ci.EventHandler);
+                break;
+            case "TextBox":
+                ctl = new TextBox();
+                ((TextBox) ctl).Style["Position"] = "Absolute";
+                ((TextBox) ctl).Style["Top"] = ci.Top.ToString();
+                ((TextBox) ctl).Style["Left"] = ci.Left.ToString();
+                this.AppendEvent(ctl, ci.EventHandler);
+                break;
+            case "Label":
+                ctl = new Label();
+                ((Label) ctl).Style["Position"] = "Absolute";
+                ((Label) ctl).Style["Top"] = ci.Top.ToString();
+                ((Label) ctl).Style["Left"] = ci.Left.ToString();
+                break;
+            default:
+                return null;
+        }
+        ctl.ID = ci.ID;
+        //this.form1.Controls.Add(ctl);
+        return ctl;
+    }
+
+
+    //vielleicht:
+    protected override void OnInit(EventArgs e)
+    {
+        //
+        // CODEGEN: This call is required by the ASP.NET Web Form Designer.
+        //
+        InitializeComponent();
+        base.OnInit(e);
+    }
+
+    /// <summary>
+    /// Required method for Designer support - do not modify
+    /// the contents of this method with the code editor.
+    /// </summary>
+    private void InitializeComponent()
+    {
+        //    this.cmdAdd.Click += new System.EventHandler(this.Button1_Click);
+        //    this.TextBox1.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
+        //this.Button1.Click += new System.EventHandler(this.Button_Click);
+        this.Load += new EventHandler(this.Page_Load);
     }
 }

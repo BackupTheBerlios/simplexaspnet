@@ -20,6 +20,8 @@ function DIV1_onclick() {
     <div>
         &nbsp;
         <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Reset" />
+        <asp:Label ID="lblResult" runat="server" Text="Label" Width="154px"></asp:Label>
+        <asp:Label ID="lblText" runat="server" Text="Label" Width="260px"></asp:Label>
         <asp:MultiView ID="MultiView1" runat="server">
             <asp:View ID="View1" runat="server">
                 Anzahl der Variablen<asp:TextBox ID="VariablesTextBox" runat="server" Width="70px">4</asp:TextBox><br />
