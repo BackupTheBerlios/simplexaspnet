@@ -20,7 +20,14 @@ public partial class _Default : Page
         {
             // Recreate controls created on previous roundtrips
             if (Session["VarTextBoxes"] != null)
-                this.VarTextBoxes = (TextBox[,]) Session["VarTextBoxes"];
+            {
+                this.VarTextBoxes = (TextBox[,])Session["VarTextBoxes"];
+                foreach (TextBox box in this.VarTextBoxes)
+                {
+                    this.View2.Controls.Add(box);
+                }
+
+            }
             //RecreatePersistedControls();
         }
 
@@ -37,34 +44,51 @@ public partial class _Default : Page
 
     private void GenerateField()
     {
-        //this.field = new SimplexField(5);
-        //Row[] rows = new Row[3];
-        //rows[0] = new Row(new double[] { 1, 2, 3, 4, 5 });
-        //rows[1] = new Row(new double[] { 6, 7, 8, 9, 10 });
-        //rows[2] = new Row(new double[] { 11, 12, 13, 14, 15 });
-
-        //foreach (Row row in rows)
-        //{
-        //    this.field.AddRow(row);
-        //}
-
-
         int columns = this.VarTextBoxes.GetLength(0);
 
 
         this.field = new SimplexField(columns);
 
+        Row[] rows = new Row[this.VarTextBoxes.GetLength(1)];
 
-        Row[] rows = new Row[3];
-        rows[0] = new Row(new double[] {1, 2, 3, 4, 5});
-        rows[1] = new Row(new double[] {6, 7, 8, 9, 10});
-        rows[2] = new Row(new double[] {11, 12, 13, 14, 15});
+        for (int y = 0; y < this.VarTextBoxes.GetLength(1); y++ )
+        {
+            double[] drow = new double[this.VarTextBoxes.GetLength(0)];
+
+            for (int x = 0; x < this.VarTextBoxes.GetLength(0);x++ )
+            {
+                if (this.VarTextBoxes[x, y]== null )
+                {
+                    drow[x] = 0;
+                }
+                else
+                {
+                    try
+                    {
+                        drow[x] = Convert.ToDouble(this.VarTextBoxes[x, y].Text);
+                    }
+                    catch
+                    {
+                        drow[x] = 0;
+                    }
+                }
+            }
+            rows[y] = new Row(drow);
+        }
+
+
+        //Row[] rows = new Row[3];
+        //rows[0] = new Row(new double[] { 1, 2, 3, 4, 5 });
+        //rows[1] = new Row(new double[] { 6, 7, 8, 9, 10 });
+        //rows[2] = new Row(new double[] { 11, 12, 13, 14, 15 });
 
 
         foreach (Row row in rows)
         {
             this.field.AddRow(row);
         }
+
+        Session["field"] = this.field;
     }
 
     private void ShowView()
@@ -73,6 +97,22 @@ public partial class _Default : Page
 
         switch (state)
         {
+            case "phase3nextstep":
+                this.field = (SimplexField)Session["field"];
+
+                Simplex simplex = new Simplex(this.field);
+                simplex.NextSetp();
+                this.field = simplex.Field;
+
+                this.DrawField();
+                this.MultiView1.SetActiveView(this.View3);
+                Session["field"]=this.field;
+                break;
+            case "phase3refresh":
+                this.field = (SimplexField)Session["field"];
+                this.DrawField();
+                this.MultiView1.SetActiveView(this.View3);
+                break;
             case "phase3":
                 this.GenerateField();
                 this.DrawField();
@@ -122,7 +162,10 @@ public partial class _Default : Page
         int x = Convert.ToInt32(this.VariablesTextBox.Text);
         int y = Convert.ToInt32(this.BaseVarsTextBox.Text);
 
-        VarTextBoxes = new TextBox[x + 1,y + 1];
+        if (Session["VarTextBoxes"] != null)
+            this.VarTextBoxes = (TextBox[,])Session["VarTextBoxes"];
+        else
+            this.VarTextBoxes = new TextBox[x + 1,y + 1];
 
         Table table = new Table();
 
@@ -136,10 +179,12 @@ public partial class _Default : Page
                 TableCell cell = new TableCell();
                 Label label = new Label();
 
+                if (VarTextBoxes[i2, i]==null)
+                    VarTextBoxes[i2, i] = new TextBox();
 
-                VarTextBoxes[i2, i] = new TextBox();
                 VarTextBoxes[i2, i].Width = 30;
                 VarTextBoxes[i2, i].ID = "var[" + i2.ToString() + "," + i.ToString() + "]";
+                VarTextBoxes[i2, i].TextChanged += new EventHandler(TextBox_TextChanged);
 
 
                 if (i2 == x)
@@ -214,5 +259,17 @@ public partial class _Default : Page
         //    this.TextBox1.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
         //this.Button1.Click += new System.EventHandler(this.Button_Click);
         this.Load += new EventHandler(this.Page_Load);
+    }
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        Session["state"] = "phase3refresh";
+        // int count = this.VarTextBoxes.Length;
+        this.ShowView();
+    }
+    protected void Button5_Click(object sender, EventArgs e)
+    {
+        Session["state"] = "phase3nextstep";
+        // int count = this.VarTextBoxes.Length;
+        this.ShowView();
     }
 }
