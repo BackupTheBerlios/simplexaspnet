@@ -39,10 +39,7 @@ public class Matrix : IMatrix
        // Row a= array[_row];  
        
     }
-    public void AddRow(int _index, Row _row)
-    {
-        this.array.Add(_index, _row);
-    }
+
     
     /// <summary>
     /// Add two rows
@@ -70,7 +67,7 @@ public class Matrix : IMatrix
                 }
             }
 
-            AddRow(destIndex, sum2);
+            //AddRow(destIndex, sum2);
         }
         else
             return;
@@ -103,11 +100,17 @@ public class Matrix : IMatrix
                 }
             }
 
-            AddRow(destIndex, sum2);
+            //AddRow(destIndex, sum2);
         }
         else
             return;
     }
+
+    public void DivideRow(int pivotIndex, double factor)
+    {
+        MultiplyRow(pivotIndex, 1/factor);
+    }
+
     /// <summary>
     /// Multiplies a pivotrow with an factor 
     /// </summary>
@@ -130,35 +133,9 @@ public class Matrix : IMatrix
                 }
             }
 
-            AddRow(pivotIndex, pivot);
+            //AddRow(pivotIndex, pivot);
         }
     }
-
-    public double DivideRowForPivot(int index, int pivoZaehler, int pivoNenner)
-    {    
-        Row sum = GetRow(index);
-        double[] a = new double[sum.Length];
-        double[] b = new double[sum.Length];
-
-        if (sum.Length != 0)
-        {
-            {
-                for (int i = 0; i <= sum.Length - 1; i++)
-                {
-                    a[pivoZaehler] = (Double)sum.Values.GetValue(pivoZaehler);
-                    b[pivoNenner] = (Double)sum.Values.GetValue(pivoNenner);
-
-                    a[pivoZaehler] /= b[pivoNenner]; // divides
-                    //possible
-                    sum.Values.SetValue(a[pivoZaehler], i + 1);// stores the result of the division
-                }
-            }
-
-            return a[pivoZaehler]; // returns the result
-        }
-        else return 0;
-    }
-
 
     //???? per que?
     public void MultiplyRow(int sourceIndex, int destIndex, double factor)

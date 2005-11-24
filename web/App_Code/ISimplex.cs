@@ -23,4 +23,6 @@ public interface ISimplex
     /// start the simplex algorythm
     /// </summary>
     void Start();
+
+    double DivideRowForPivot(int index);
 }
