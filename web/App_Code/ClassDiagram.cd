@@ -2,7 +2,7 @@
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Font Name="Tahoma" Size="8.25" />
   <Class Name="Matrix">
-    <Position X="0.5" Y="1.25" Width="2.25" />
+    <Position X="0.75" Y="1.75" Width="2.25" />
     <TypeIdentifier>
       <FileName>App_Code\Matrix.cs</FileName>
       <HashCode>AAAAAAAAAIAAAAAAAAgAACAAAAAAAAAAEAAAAAABBgA=</HashCode>
@@ -10,7 +10,7 @@
     <Lollipop Position="0.387" />
   </Class>
   <Class Name="HtmlBuilder">
-    <Position X="3.25" Y="2.25" Width="1.5" />
+    <Position X="3.25" Y="2" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\HtmlBuilder.cs</FileName>
       <HashCode>AEAAAAAAQAAAAABAAAAAACAAAAAAgAAAAAAAAAAAAAA=</HashCode>
@@ -40,8 +40,15 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
+  <Class Name="Class1" Collapsed="true">
+    <Position X="0.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>App_Code\Class1.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
   <Interface Name="IMatrix" Collapsed="true">
-    <Position X="0.5" Y="0.5" Width="2.5" />
+    <Position X="1.25" Y="2" Width="2.5" />
     <TypeIdentifier>
       <FileName>App_Code\IMatrix.cs</FileName>
       <HashCode>AAAAAAAAAIAAAAAAAAAAACAAAAAAAAAAEAAAAAAABgA=</HashCode>
