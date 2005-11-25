@@ -29,7 +29,15 @@ public class Simplex : ISimplex
     /// <returns></returns>
     public int FindPivotColumn()
     {
-        return 0;
+        Row _row = _row.getRow(0);
+        double[] a = new double [_row.Length];
+        for (int i = 0; i<= _row.Length; i++)
+            a[i] =_row.Values.GetValue(i);
+            a[i+1] = _row.Values.GetValue(i+1);
+        if (a[i] >= a[i+1])
+            i++;
+
+        
     }
 
     /// <summary>
