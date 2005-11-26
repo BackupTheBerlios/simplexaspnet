@@ -169,8 +169,8 @@ public partial class _Default : Page
         this.field = (SimplexField) Session["field"];
 
 
-        this.field.PivotColumn = Convert.ToInt32(this.PivotColumn.Text);
-        this.field.PivotRow = Convert.ToInt32(this.PivotRow.Text);
+        //this.field.PivotColumn = Convert.ToInt32(this.PivotColumn.Text);
+        //this.field.PivotRow = Convert.ToInt32(this.PivotRow.Text);
 
         htmlBuilder = new HtmlBuilder(this.field);
         htmlBuilder.ShowColumnHeader = true;
