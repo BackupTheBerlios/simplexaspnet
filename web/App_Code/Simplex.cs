@@ -26,27 +26,30 @@ public class Simplex : ISimplex
     /// <summary>
     /// finds the pivot column
     /// </summary>
-    /// <returns></returns>
-    public double FindPivotColumn()
+    /// <returns>the index of the column</returns>
+    public int FindPivotColumn()
     {
         Row _row = this.field.GetRow(0);
-        double[] a = new double [_row.Length];
+        double[] a = _row.Values;
+        double[] b = _row.Values;
         int i;
-        for (i = 0; i<= _row.Length; i++)
+        for (i = 0; i <= _row.Length-2; i++)
         {
-            a[i] =_row.Values[i];
-            ///for(int j = 1;j<=_row.Length;j++)
-            a[i+1] = _row.Values[i+1];
-            if (a[i] <= a[i+1])
-            {
-                a[i]=a[i+1];
+            if (a[i] > a[i + 1])
+                a[i + 1] = a[i];
                 i++;
-            }
             else
-            i++;
+                i++;
         }
-         return a[i];
-        
+
+        for (int index = 0; index <= _row.Length-1; index++)
+        {
+            if (b[index] != a[_row.Length-1])
+               index++;
+            else
+                return index;
+        }
+        return -1;
     }
 
     /// <summary>
