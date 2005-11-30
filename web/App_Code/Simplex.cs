@@ -27,16 +27,25 @@ public class Simplex : ISimplex
     /// finds the pivot column
     /// </summary>
     /// <returns></returns>
-    public int FindPivotColumn()
+    public double FindPivotColumn()
     {
-        Row _row = _row.getRow(0);
+        Row _row = this.field.GetRow(0);
         double[] a = new double [_row.Length];
-        for (int i = 0; i<= _row.Length; i++)
-            a[i] =_row.Values.GetValue(i);
-            a[i+1] = _row.Values.GetValue(i+1);
-        if (a[i] >= a[i+1])
+        int i;
+        for (i = 0; i<= _row.Length; i++)
+        {
+            a[i] =_row.Values[i];
+            ///for(int j = 1;j<=_row.Length;j++)
+            a[i+1] = _row.Values[i+1];
+            if (a[i] <= a[i+1])
+            {
+                a[i]=a[i+1];
+                i++;
+            }
+            else
             i++;
-
+        }
+         return a[i];
         
     }
 
@@ -121,4 +130,14 @@ public class Simplex : ISimplex
         double n=this.field.GetRow(rowIndex).Values[this.field.ColumnCount-1];
         return z/n;
     }
+
+    #region ISimplex Members
+
+
+    int ISimplex.FindPivotColumn()
+    {
+        throw new Exception("The method or operation is not implemented.");
+    }
+
+    #endregion
 }

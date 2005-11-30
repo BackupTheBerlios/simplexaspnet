@@ -6,6 +6,7 @@ public class Row : Object, IComparable
 
     public Row(double[] init)
     {
+        Console.WriteLine("Row Constructor" + init[0]);
         this.values = init;
     }
 

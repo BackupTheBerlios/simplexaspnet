@@ -34,12 +34,14 @@ public class Matrix : IMatrix
     */
     public int AddRow(Row _row)
     {
-        this.array.Add(this.index, _row);       
+        Console.WriteLine("addRow index:"+this.index);
+        this.array.Add(this.index, _row);
+        Console.WriteLine("return index: "+index);
         return index++;
        // Row a= array[_row];  
        
     }
-
+    
     
     /// <summary>
     /// Add two rows
