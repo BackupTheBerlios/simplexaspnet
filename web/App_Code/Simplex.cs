@@ -33,12 +33,12 @@ public class Simplex : ISimplex
         double[] a = _row.Values;
         double biggest = a[0];
         int index = 0;
-        for (int i = 0; i <= _row.Length - 1; i++)
+        for (int i = 0; i < (_row.Length - 1); i++)
         {
-            if (biggest < a[i + 1])
+            if (biggest < a[i])
             {
-                biggest = a[i + 1];
-                index = i + 1;
+                biggest = a[i];
+                index = i;
                 i++;
             }
             else
