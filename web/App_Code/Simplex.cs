@@ -31,25 +31,20 @@ public class Simplex : ISimplex
     {
         Row _row = this.field.GetRow(0);
         double[] a = _row.Values;
-        double[] b = _row.Values;
-        int i;
-        for (i = 0; i <= _row.Length-2; i++)
+        double biggest = a[0];
+        int index = 0;
+        for (int i = 0; i <= _row.Length - 1; i++)
         {
-            if (a[i] > a[i + 1])
-                a[i + 1] = a[i];
+            if (biggest < a[i + 1])
+            {
+                biggest = a[i + 1];
+                index = i + 1;
                 i++;
+            }
             else
                 i++;
         }
-
-        for (int index = 0; index <= _row.Length-1; index++)
-        {
-            if (b[index] != a[_row.Length-1])
-               index++;
-            else
-                return index;
-        }
-        return -1;
+        return index;
     }
 
     /// <summary>
