@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Matrix;
+using LinearProgramming;
 
    
 public class BuildDot
 {
-    private M matrix;
+    private Matrix matrix;
     public BuildDot()
     {
         throw new System.NotImplementedException();
