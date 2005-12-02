@@ -1,0 +1,8 @@
+bin\Debug\NetwerkFluss.exe
+bin\Debug\NetwerkFluss.pdb
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\NetwerkFluss.Form1.resources
+obj\Debug\NetwerkFluss.Properties.Resources.resources
+obj\Debug\NetwerkFluss.csproj.GenerateResource.Cache
+obj\Debug\NetwerkFluss.exe
+obj\Debug\NetwerkFluss.pdb
