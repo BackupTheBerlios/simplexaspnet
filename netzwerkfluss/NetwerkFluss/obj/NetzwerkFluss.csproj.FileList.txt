@@ -6,3 +6,5 @@ obj\Debug\NetwerkFluss.Properties.Resources.resources
 obj\Debug\NetzwerkFluss.csproj.GenerateResource.Cache
 obj\Debug\NetzwerkFluss.exe
 obj\Debug\NetzwerkFluss.pdb
+bin\Debug\Matrix.dll
+bin\Debug\Matrix.pdb

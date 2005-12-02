@@ -12,7 +12,6 @@ public class BuildDot
         throw new System.NotImplementedException();
     }
 
-
     public void Build()
     {
         throw new System.NotImplementedException();
