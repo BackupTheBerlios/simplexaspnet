@@ -18,6 +18,7 @@ namespace NetwerkFluss
         
         DataTable matrixTable;
         IMatrix matrix= new Matrix();
+        DotBuilder builder;
         
         public Form1()
         {
@@ -95,8 +96,11 @@ namespace NetwerkFluss
                 }
                 Row row = new Row(dRow);
                 this.matrix.AddRow(row);
+               
             }
-          
+           builder = new DotBuilder(matrix, anzahl);
+           builder.Build();
+                
         }
     }
 }
