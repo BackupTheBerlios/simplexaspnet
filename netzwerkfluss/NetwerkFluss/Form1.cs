@@ -40,8 +40,8 @@ namespace NetwerkFluss
 
                 DataGridViewTextBoxColumn column= new DataGridViewTextBoxColumn();
                 
-                column.HeaderText = x.ToString();
-                column.Name = x.ToString();
+                column.HeaderText = (x+1).ToString();
+                column.Name = (x+1).ToString();
                 column.Width = 30;
                 
                 this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
