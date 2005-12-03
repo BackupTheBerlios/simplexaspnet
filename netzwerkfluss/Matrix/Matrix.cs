@@ -14,7 +14,6 @@ namespace LinearProgramming
         public Matrix()
         {
             array = new Dictionary<int, Row>();
-
         }
 
         /// <summary>
@@ -41,7 +40,6 @@ namespace LinearProgramming
             Console.WriteLine("return index: " + index);
             return index++;
             // Row a= array[_row];  
-
         }
 
 
@@ -52,7 +50,6 @@ namespace LinearProgramming
         /// <param name="destIndex">Index of the added row</param>
         public void SumRow(int sourceIndex, int destIndex)
         {
-
             Row sum1 = GetRow(sourceIndex);
             Row sum2 = GetRow(destIndex);
             double[] a = new double[sum1.Length];
@@ -63,8 +60,8 @@ namespace LinearProgramming
                     for (int i = 0; i <= sum1.Length - 1; i++)
                     {
                         // b[i] += a[i]; 
-                        a[i] = (Double)sum1.Values.GetValue(i);
-                        b[i] = (Double)sum2.Values.GetValue(i);
+                        a[i] = (Double) sum1.Values.GetValue(i);
+                        b[i] = (Double) sum2.Values.GetValue(i);
                         b[i] += a[i]; // sum rows
                         sum2.Values.SetValue(b[i], i); // stores the result of the addition
                         Console.WriteLine("b[i]:" + b[i]);
@@ -77,67 +74,57 @@ namespace LinearProgramming
                 return;
             // throw new NotImplementedException();
         }
+
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="sourceIndex">Index of the pivotrow, which is added to</param>
-        /// <param name="destIndex">Index of the added row</param>
-        /// <param name="factor">Factor which mult the pivotrow</param>
+        /// <param name="sourceIndex">Index of the source row</param>
+        /// <param name="destIndex">index of the destination row</param>
+        /// <param name="factor">Factor which mult the source row</param>
         public void SumRow(int sourceIndex, int destIndex, double factor)
         {
-
             Row sum1 = GetRow(sourceIndex);
             Row sum2 = GetRow(destIndex);
-            double[] a = new double[sum1.Length];
-            double[] b = new double[sum2.Length];
+            
+            double sourceRowValue;
+            double destRowValue;
+
             if (sum1.Length == sum2.Length)
             {
                 {
                     for (int i = 0; i <= sum1.Length - 1; i++)
                     {
-                        // b[i] += a[i]; 
-                        a[i] = (Double)sum1.Values.GetValue(i);
-                        b[i] = (Double)sum2.Values.GetValue(i);
-                        b[i] *= factor;//mult pivotrow with factor
-                        b[i] += a[i]; // sum rows
-                        sum2.Values.SetValue(b[i], i); // stores the result of the addition
+                        sourceRowValue = (Double) sum1.Values.GetValue(i);
+                        destRowValue = (Double) sum2.Values.GetValue(i);
+                        sum2.Values.SetValue(destRowValue + sourceRowValue*factor, i); // stores the result of the addition
                     }
                 }
-
-                //AddRow(destIndex, sum2);
             }
             else
                 return;
         }
 
-        public void DivideRow(int pivotIndex, double factor)
+        public void DivideRow(int rowIndex, double factor)
         {
-            MultiplyRow(pivotIndex, 1 / factor);
+            MultiplyRow(rowIndex, 1 / factor);
         }
 
         /// <summary>
-        /// Multiplies a pivotrow with an factor 
+        /// Multiplies a row with a factor 
         /// </summary>
-        /// <param name="pivotIndex">Index of the pivotrow</param>
+        /// <param name="_rowIndex"index of the row</param>
         /// <param name="factor"></param>
-        public void MultiplyRow(int pivotIndex, double factor)
+        public void MultiplyRow(int _rowIndex, double factor)
         {
+            Row _row = GetRow(_rowIndex);
 
-            Row pivot = GetRow(pivotIndex);
-            double[] a = new double[pivot.Length];
-
-            if (pivot.Length != 0)
+            if (_row.Length != 0)
             {
+                for (int i = 0; i <= _row.Length - 1; i++)
                 {
-                    for (int i = 0; i <= pivot.Length - 1; i++)
-                    {
-                        a[i] = (Double)pivot.Values.GetValue(i);
-                        a[i] *= factor; //mult the row with the factor
-                        pivot.Values.SetValue(a[i], i);// stores the result of the multiplication
-                    }
+                    _row.Values.SetValue((Double) _row.Values.GetValue(i)*factor, i);
+                    // stores the result of the multiplication
                 }
-
-                //AddRow(pivotIndex, pivot);
             }
         }
 

@@ -1,4 +1,5 @@
 using System;
+using LinearProgramming;
 
 public class SimplexField : Matrix
 {

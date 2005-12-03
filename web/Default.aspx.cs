@@ -122,13 +122,13 @@ public partial class _Default : Page
     private void ShowView()
     {
         string state = Session["state"] as string;
-
+        Simplex simplex;
         switch (state)
         {
             case "phase3nextstep":
                 this.field = (SimplexField)Session["field"];
 
-                Simplex simplex = new Simplex(this.field);
+                simplex = new Simplex(this.field);
                 simplex.NextSetp();
                 this.field = simplex.Field;
 
@@ -143,6 +143,9 @@ public partial class _Default : Page
                 break;
             case "phase3":
                 this.GenerateField();
+                simplex = new Simplex(this.field);
+                simplex.SetPivotElement();
+                this.field = simplex.Field;
                 this.DrawField();
                 this.MultiView1.SetActiveView(this.View3);
                 break;

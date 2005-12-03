@@ -30,19 +30,18 @@ public class Simplex : ISimplex
     public int FindPivotColumn()
     {
         Row _row = this.field.GetRow(0);
+
         double[] a = _row.Values;
-        double biggest = a[0];
+        double biggest = 0;
         int index = 0;
+
         for (int i = 0; i < (_row.Length - 1); i++)
         {
-            if (biggest < a[i])
+            if (a[i] >= 0 && a[i] >= biggest)
             {
                 biggest = a[i];
                 index = i;
-                i++;
             }
-            else
-                i++;
         }
         return index;
     }
@@ -53,22 +52,15 @@ public class Simplex : ISimplex
     /// <returns></returns>
     public int FindPivotRow()
     {
-        double smallest = 0;
-        int index = 0; ;
-        for (int i=1;i<this.field.RowCount;i++)
+        double smallest = Double.PositiveInfinity;
+        int index = 0;
+        for (int i = 1; i < this.field.RowCount; i++)
         {
-            if (smallest == 0)
+            double newsmallest = DivideRowForPivot(i);
+            if (newsmallest <= smallest && newsmallest > 0)
             {
-                smallest = DivideRowForPivot(i);
+                smallest = newsmallest;
                 index = i;
-            }
-            else
-            {
-                double newsmallest = DivideRowForPivot(i);
-                if (newsmallest < smallest)
-                {
-                    smallest = newsmallest;
-                }
             }
         }
         return index;
@@ -90,11 +82,17 @@ public class Simplex : ISimplex
         throw new NotImplementedException();
     }
 
+
     public void NextSetp()
     {
-        this.FindPivotColumn();
-        this.FindPivotRow();
+        this.SetPivotElement();
         this.Transform();
+    }
+
+    public void SetPivotElement()
+    {
+        this.field.PivotColumn = this.FindPivotColumn();
+        this.field.PivotRow = this.FindPivotRow();
     }
 
     /// <summary>
@@ -112,25 +110,29 @@ public class Simplex : ISimplex
         }
     }
 
-    private void TransformRow(int i)
+    private void TransformRow(int destRowIndex)
     {
-        this.field.SumRow(this.field.PivotRow,i,1/this.field.GetRow(i).Values[this.field.PivotColumn]);
+        double valueInPivotRow = this.field.GetRow(this.field.PivotRow).Values[this.field.PivotColumn];
+        double valueInDestRow = this.field.GetRow(destRowIndex).Values[this.field.PivotColumn];
+        double factor = -(valueInDestRow/valueInPivotRow);
+
+        this.field.SumRow(this.field.PivotRow, destRowIndex, factor);
     }
 
     private void TransformPivotRow()
     {
-        this.field.MultiplyRow(this.field.PivotRow, this.field.GetRow(this.field.PivotRow).Values[this.field.PivotColumn]);       
+        this.field.MultiplyRow(this.field.PivotRow,
+                               1/this.field.GetRow(this.field.PivotRow).Values[this.field.PivotColumn]);
     }
 
     public double DivideRowForPivot(int rowIndex)
     {
-        double z=this.field.GetRow(rowIndex).Values[this.field.PivotColumn];
-        double n=this.field.GetRow(rowIndex).Values[this.field.ColumnCount-1];
+        double n = this.field.GetRow(rowIndex).Values[this.field.PivotColumn];
+        double z = this.field.GetRow(rowIndex).Values[this.field.ColumnCount - 1];
         return z/n;
     }
 
     #region ISimplex Members
-
 
     int ISimplex.FindPivotColumn()
     {
