@@ -100,6 +100,7 @@ namespace NetwerkFluss
             }
            builder = new DotBuilder(matrix, anzahl);
            builder.Build();
+           builder.createRestrictions(5, 1, 6);
                 
         }
     }

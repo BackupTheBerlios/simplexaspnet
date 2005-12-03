@@ -4,41 +4,40 @@ using System.Text;
 using LinearProgramming;
 using System.IO;
 
-   
+
 public class DotBuilder
 {
     private IMatrix matrix;
     private int number;
     private string FILE_NAME;
-   /// <summary>
-   /// Constructor
-   /// </summary>
-   /// <param name="_matrix">Matrix</param>
-   /// <param name="_number">Number of notes</param>
-    public DotBuilder( IMatrix _matrix, int _number)
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="_matrix">Matrix</param>
+    /// <param name="_number">Number of notes</param>
+    public DotBuilder(IMatrix _matrix, int _number)
     {
         this.matrix = _matrix;
         this.number = _number;
     }
 
     /// <summary>
-    /// Builds the dot.file with the directed graph
+    /// Builds the dot.file with the directed graph (includes: nodes and cots)
     /// </summary>
     public void Build()
     {
-        
-        double [] nodes = new Double[number];
+
+        double[] nodes = new Double[number];
         Row row = new Row(nodes);
-        FILE_NAME = "MyFile.dot";
-       
+        FILE_NAME = "Graph.txt";
+
         if (File.Exists(FILE_NAME))
         {
             Console.WriteLine("{0} already exists.", FILE_NAME);
             return;
         }
         StreamWriter sr = File.CreateText(FILE_NAME);
-        sr.WriteLine(" digraph G {");
-        sr.WriteLine(" size =" +number+","+number+";");
+        sr.WriteLine(" digraph G {\n size =\"" + number + "," + number + "\";");
         for (int i = 0; i < number; i++)
         {
             row = matrix.GetRow(i);
@@ -46,25 +45,69 @@ public class DotBuilder
             {
                 if (row.Values[j] != -1)
                 {
-                    sr.WriteLine(" " + (i+1) + " -> " + (j+1) + " [label=" + row.Values[j] + "];");
+                    sr.WriteLine(" " + (i + 1) + " -> " + (j + 1) + " [label=\"" + row.Values[j] + "\"];");
                 }
-                
+
             }
 
         }
-      
-        
 
-        /// Header der Knoten in Matrix auslesen und die dazugehörigen Kosten
-      
-        //sr.WriteLine("I can write ints {0} or floats {1}, and so on.",
-        //    1, 4.2);
+        sr.WriteLine(" }");
         sr.Close();
-            
-            //row.ToString;
-            //row.Values.
+
+    }
+    public string[] createRestrictions(int _transportSize, int _source, int _dest)
+    {
+        double[] nodes = new Double[number];
+        Row row = new Row(nodes);
+        String[] restriction = new String[number];
+        bool flag = false;
+        for (int i= 0; i<number; i++)
+        {
+            //Knotenregel für Senke, alternativ: Knotenregel für Quelle
+            if (i == _dest - 1)
+                restriction[i] = getColumnNodes(_dest - 1) + "=" + _transportSize;
+            else if (i != _source - 1)
+                restriction[i] = getColumnNodes(i) + getRowNodes(i,false) + "= 0";
+            else
+                restriction[i] = getRowNodes(_source-1, true) + "=" + _transportSize;
+
         }
-        //throw new System.NotImplementedException();
+        return restriction;
+
+    }
+
+
+    public string getColumnNodes(int _indexColumn)
+    {
+        double[] nodes = new Double[number];
+        Row row = new Row(nodes);
+        string temp = ""; //= new String[number];
+        for (int z = 0; z < number; z++)
+        {
+            row = matrix.GetRow(z);
+            if (row.Values[_indexColumn] != -1)
+                temp = temp+"+x" + (z+1) + (_indexColumn+1);
+        }
+        return temp;
+    }
+
+    public string getRowNodes(int _indexRow, bool flag)
+    {
+        double[] nodes = new Double[number];
+        Row row1 = new Row(nodes);
+        string temp = "";
+        row1 = matrix.GetRow(_indexRow);
+        for (int j = 0; j < number; j++)
+        {
+           if (row1.Values[j] != -1 && flag == false)
+           temp=temp+ "-x" + (_indexRow+1) + (j+1);
+           else if (row1.Values[j] != -1 && flag == true)
+           {
+              temp = temp + "+x" + (_indexRow + 1) + (j + 1);
+           }
+        }
+        return temp;
+     }
     
 }
-
