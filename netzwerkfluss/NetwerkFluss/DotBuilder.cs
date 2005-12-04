@@ -60,19 +60,37 @@ public class DotBuilder
     {
         double[] nodes = new Double[number];
         Row row = new Row(nodes);
-        String[] restriction = new String[number];
-        bool flag = false;
+        String[] restriction = new String[number+2];
+               
         for (int i= 0; i<number; i++)
         {
-            //Knotenregel für Senke, alternativ: Knotenregel für Quelle
+            if (i == 0)//Knotenregel für Senke, alternativ: Knotenregel für Quelle
+                restriction[i] = getAimFunction();
             if (i == _dest - 1)
-                restriction[i] = getColumnNodes(_dest - 1) + "=" + _transportSize;
-            else if (i != _source - 1)
-                restriction[i] = getColumnNodes(i) + getRowNodes(i,false) + "= 0";
-            else
-                restriction[i] = getRowNodes(_source-1, true) + "=" + _transportSize;
+            {
+                if (i == number - 1)
+                    restriction[i + 1] = getColumnNodes(_dest - 1) + "=" + _transportSize;
+                else
+                    restriction[i + 1] = getColumnNodes(_dest - 1) + "=" + _transportSize + ",";
+            }
+            if (i == _source - 1)
+                {
+                    if (i == number - 1)
+                        restriction[i + 1] = getRowNodes(_source - 1, true) + "=" + _transportSize;
+                    else
+                        restriction[i + 1] = getRowNodes(_source - 1, true) + "=" + _transportSize + ",";
+                }
 
+
+            if (i != _dest - 1 && i != _source - 1)
+            {
+                if (i == number - 1)
+                    restriction[i + 1] = getColumnNodes(i) + getRowNodes(i, false) + "= 0";
+                else
+                    restriction[i + 1] = getColumnNodes(i) + getRowNodes(i, false) + "= 0,";
+            }
         }
+        restriction[number+1] = "},NONNEGATIVE);";
         return restriction;
 
     }
@@ -86,7 +104,9 @@ public class DotBuilder
         for (int z = 0; z < number; z++)
         {
             row = matrix.GetRow(z);
-            if (row.Values[_indexColumn] != -1)
+            if (row.Values[_indexColumn] != -1 && temp == "")
+                temp = temp + "x" + (z + 1) + (_indexColumn + 1);
+            else if (row.Values[_indexColumn] != -1)
                 temp = temp+"+x" + (z+1) + (_indexColumn+1);
         }
         return temp;
@@ -100,14 +120,50 @@ public class DotBuilder
         row1 = matrix.GetRow(_indexRow);
         for (int j = 0; j < number; j++)
         {
-           if (row1.Values[j] != -1 && flag == false)
-           temp=temp+ "-x" + (_indexRow+1) + (j+1);
+           if (row1.Values[j] != -1 && temp == ""&& flag ==true)
+            temp = temp + "x" + (_indexRow + 1) + (j + 1);
+
+           else if (row1.Values[j] != -1 && flag == false)
+            temp = temp + "-x" + (_indexRow + 1) + (j + 1);
+
            else if (row1.Values[j] != -1 && flag == true)
-           {
-              temp = temp + "+x" + (_indexRow + 1) + (j + 1);
-           }
+            temp = temp + "+x" + (_indexRow + 1) + (j + 1);
+           
         }
         return temp;
      }
     
+    public string getAimFunction()
+    {
+        double[] nodes = new Double[number];
+        Row row1 = new Row(nodes);
+        string tmp = "with(simplex)minimize(";
+        for (int i = 0; i < number; i++)
+        {
+            
+            row1 = matrix.GetRow(i);
+            for (int j = 0; j < number; j++)
+            {
+                if (row1.Values[j] != -1 && tmp == "with(simplex)minimize(")
+                    tmp = tmp + row1.Values[j] + "*x" + (i + 1) + (j + 1);
+                    
+                else if (row1.Values[j] != -1)
+                    tmp = tmp + "+" + row1.Values[j] + "*x" + (i + 1) + (j + 1);
+                    
+                
+             }
+        }
+        return tmp + ",{";
+    }
+
+    public string getRestrictions(int _transportSize, int _source, int _dest)
+    {
+        string restriction = String.Empty;
+        string[] stringArray = createRestrictions(_transportSize, _source, _dest);
+        foreach (string singleRestriction in stringArray)
+        {
+            restriction += singleRestriction;
+        }
+        return restriction;
+    }
 }

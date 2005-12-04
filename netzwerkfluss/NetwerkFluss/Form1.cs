@@ -1,25 +1,19 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Text;
+using System.Diagnostics;
 using System.Windows.Forms;
 using LinearProgramming;
-
-
 
 namespace NetwerkFluss
 {
     public partial class Form1 : Form
     {
+        private const double PSEUDO = -1;
 
-        const double PSEUDO = -1;
-        
-        DataTable matrixTable;
-        IMatrix matrix= new Matrix();
-        DotBuilder builder;
-        
+        private DataTable matrixTable;
+        private IMatrix matrix = new Matrix();
+        private DotBuilder builder;
+
         public Form1()
         {
             InitializeComponent();
@@ -34,19 +28,21 @@ namespace NetwerkFluss
             this.matrixTable = new DataTable("matrix");
 
             int anzahl = Convert.ToInt32(knotenTextBox.Text);
-            
+
             for (int x = 0; x < anzahl; x++)
             {
-                matrixTable.Columns.Add((x+1).ToString());
+                matrixTable.Columns.Add((x + 1).ToString());
 
-                DataGridViewTextBoxColumn column= new DataGridViewTextBoxColumn();
-                
-                column.HeaderText = (x+1).ToString();
-                column.Name = (x+1).ToString();
+                DataGridViewTextBoxColumn column = new DataGridViewTextBoxColumn();
+
+                column.HeaderText = (x + 1).ToString();
+                column.Name = (x + 1).ToString();
                 column.Width = 30;
-                
-                this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            column});
+
+                this.dataGridView1.Columns.AddRange(new DataGridViewColumn[]
+                                                        {
+                                                            column
+                                                        });
             }
 
 
@@ -58,15 +54,14 @@ namespace NetwerkFluss
             }
 
             //this.dataSet1.Tables.Add(matrixTable);
-            
+
             //this.dataGridView1.DataSource = dataSet1.Tables[0];  
-            this.dataGridView1.DataSource = this.matrixTable.DefaultView;  
-            
+            this.dataGridView1.DataSource = this.matrixTable.DefaultView;
+
             for (int y = 0; y < anzahl; y++)
             {
-                this.dataGridView1.Rows[y].HeaderCell.Value = (y+1).ToString();
+                this.dataGridView1.Rows[y].HeaderCell.Value = (y + 1).ToString();
             }
-            
         }
 
         private void createMatrix_Click(object sender, EventArgs e)
@@ -76,7 +71,7 @@ namespace NetwerkFluss
 
             int anzahl = this.matrixTable.Columns.Count;
 
-           // DataTable table = this.dataSet1.Tables[0];
+            // DataTable table = this.dataSet1.Tables[0];
 
             for (int y = 0; y < anzahl; y++)
             {
@@ -84,8 +79,8 @@ namespace NetwerkFluss
                 for (int x = 0; x < anzahl; x++)
                 {
                     string wert = String.Empty;
-                    if (this.dataGridView1.Rows[y].Cells[x].Value != System.DBNull.Value)
-                        wert = (string)this.dataGridView1.Rows[y].Cells[x].Value;
+                    if (this.dataGridView1.Rows[y].Cells[x].Value != DBNull.Value)
+                        wert = (string) this.dataGridView1.Rows[y].Cells[x].Value;
 
                     if (wert == null || wert == String.Empty || wert.Length == 0)
                     {
@@ -96,12 +91,82 @@ namespace NetwerkFluss
                 }
                 Row row = new Row(dRow);
                 this.matrix.AddRow(row);
-               
             }
-           builder = new DotBuilder(matrix, anzahl);
-           builder.Build();
-           builder.createRestrictions(5, 1, 6);
-                
+
+            builder = new DotBuilder(matrix, anzahl);
+            builder.Build();
+
+
+            this.mapleTextBox.Text =
+                builder.getRestrictions(Convert.ToInt32(this.mengeTextBox.Text),
+                                        Convert.ToInt32(this.quelleTextBox.Text),
+                                        Convert.ToInt32(this.senkeTextBox.Text));
+        }
+
+
+        private void pictureButton_Click(object sender, EventArgs e)
+        {
+            PictureForm picForm = new PictureForm();
+            string path = "start.jpg";
+            picForm.ShowPicture(path);
+            picForm.Show();
+
+            this.createPicture("start");
+        }
+
+        private void createPicture(string _name)
+        {
+            //string ssss = "dot.exe -Tjpg test.dot > test.jpg";
+
+            string commandLineArgs = string.Format(" -Tjpg {0}.dot -o{1}.jpg ", _name, _name);
+            //string executablePath = @"F:\FH\Babsy\netzwerkfluss\NetwerkFluss\bin\Debug\dot.exe";
+
+            string executablePath = @"GraphViz\bin\dot.exe";
+            //Process mainProcess = null;
+
+
+            Process.Start(executablePath, commandLineArgs);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            double[,] punkte = AnalyzeMapleOutput(this.mapleOutputTextBox.Text);
+        }
+
+        private double[,] AnalyzeMapleOutput(string _output)
+        {
+            int cnt;
+            if (this.matrix == null || this.matrix.RowCount == 0)
+            {
+                cnt = Convert.ToInt32(this.knotenTextBox.Text);
+            }
+            else
+            {
+                cnt = matrix.RowCount;
+            }
+            double[,] points = new double[cnt,cnt];
+
+            string mapleOutput = _output.Replace("{", "");
+            mapleOutput=mapleOutput.Replace("}", "");
+
+            string[] equations = mapleOutput.Split(',');
+            foreach (string equation in equations)
+            {
+                string[] parts = equation.Split('=');
+                int menge = Convert.ToInt32(parts[1]);
+
+                if (menge > 0)
+                {
+                    string[] wert = parts[0].Split('x');
+
+                    int from = Convert.ToInt32(wert[1].Substring(0, 1));
+                    int to = Convert.ToInt32(wert[1].Substring(1, 1));
+
+                    points[from - 1, to - 1] = 1;
+                }
+            }
+
+            return points;
         }
     }
 }

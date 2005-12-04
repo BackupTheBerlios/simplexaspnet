@@ -8,3 +8,4 @@ obj\Debug\NetzwerkFluss.exe
 obj\Debug\NetzwerkFluss.pdb
 bin\Debug\Matrix.dll
 bin\Debug\Matrix.pdb
+obj\Debug\NetwerkFluss.PictureForm.resources
