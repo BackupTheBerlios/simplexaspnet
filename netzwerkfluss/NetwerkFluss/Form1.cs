@@ -12,7 +12,10 @@ namespace NetwerkFluss
 
         private DataTable matrixTable;
         private IMatrix matrix = new Matrix();
-        private DotBuilder builder;
+        private NetBuilder builder;
+        double[,] fake = new double[10,10];
+        string opt = "OptimizedGraph.dot";
+        string start = "StartGraph.dot";
 
         public Form1()
         {
@@ -93,8 +96,8 @@ namespace NetwerkFluss
                 this.matrix.AddRow(row);
             }
 
-            builder = new DotBuilder(matrix, anzahl);
-            builder.Build();
+            builder = new NetBuilder(matrix, anzahl);
+            builder.Build(fake, matrix, start);
 
 
             this.mapleTextBox.Text =
@@ -166,7 +169,10 @@ namespace NetwerkFluss
                 }
             }
 
+            builder.Build(points, matrix, opt);
             return points;
+            //matrix und filename
         }
+       
     }
 }
