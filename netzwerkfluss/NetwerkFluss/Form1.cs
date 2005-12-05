@@ -12,10 +12,11 @@ namespace NetwerkFluss
 
         private DataTable matrixTable;
         private IMatrix matrix = new Matrix();
-        private NetBuilder builder;
-        double[,] fake = new double[10,10];
+        private DotBuilder builder;
+        double[,] fake = new double[10, 10];
         string opt = "OptimizedGraph.dot";
         string start = "StartGraph.dot";
+        private double kosten;
 
         public Form1()
         {
@@ -65,6 +66,8 @@ namespace NetwerkFluss
             {
                 this.dataGridView1.Rows[y].HeaderCell.Value = (y + 1).ToString();
             }
+
+            this.tabControl1.Enabled = true;
         }
 
         private void createMatrix_Click(object sender, EventArgs e)
@@ -83,7 +86,7 @@ namespace NetwerkFluss
                 {
                     string wert = String.Empty;
                     if (this.dataGridView1.Rows[y].Cells[x].Value != DBNull.Value)
-                        wert = (string) this.dataGridView1.Rows[y].Cells[x].Value;
+                        wert = (string)this.dataGridView1.Rows[y].Cells[x].Value;
 
                     if (wert == null || wert == String.Empty || wert.Length == 0)
                     {
@@ -96,7 +99,7 @@ namespace NetwerkFluss
                 this.matrix.AddRow(row);
             }
 
-            builder = new NetBuilder(matrix, anzahl);
+            builder = new DotBuilder(matrix, anzahl);
             builder.Build(fake, matrix, start);
 
 
@@ -104,6 +107,9 @@ namespace NetwerkFluss
                 builder.getRestrictions(Convert.ToInt32(this.mengeTextBox.Text),
                                         Convert.ToInt32(this.quelleTextBox.Text),
                                         Convert.ToInt32(this.senkeTextBox.Text));
+
+            this.tabControl1.SelectedTab = this.tabPage2;
+            this.pictureButton.Enabled = true;
         }
 
 
@@ -112,6 +118,7 @@ namespace NetwerkFluss
             PictureForm picForm = new PictureForm();
             string path = "start.jpg";
             picForm.ShowPicture(path);
+            this.createPicture("start");
             picForm.Show();
 
             this.createPicture("start");
@@ -134,6 +141,9 @@ namespace NetwerkFluss
         private void button3_Click(object sender, EventArgs e)
         {
             double[,] punkte = AnalyzeMapleOutput(this.mapleOutputTextBox.Text);
+
+            this.mengeLbl.Text = mengeTextBox.Text;
+            this.kostenLbl.Text = this.kosten.ToString();
         }
 
         private double[,] AnalyzeMapleOutput(string _output)
@@ -147,10 +157,10 @@ namespace NetwerkFluss
             {
                 cnt = matrix.RowCount;
             }
-            double[,] points = new double[cnt,cnt];
+            double[,] points = new double[cnt, cnt];
 
             string mapleOutput = _output.Replace("{", "");
-            mapleOutput=mapleOutput.Replace("}", "");
+            mapleOutput = mapleOutput.Replace("}", "");
 
             string[] equations = mapleOutput.Split(',');
             foreach (string equation in equations)
@@ -166,6 +176,8 @@ namespace NetwerkFluss
                     int to = Convert.ToInt32(wert[1].Substring(1, 1));
 
                     points[from - 1, to - 1] = 1;
+
+                    this.kosten += this.matrix.GetRow(from - 1).Values[to - 1];
                 }
             }
 
@@ -173,6 +185,5 @@ namespace NetwerkFluss
             return points;
             //matrix und filename
         }
-       
     }
 }

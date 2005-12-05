@@ -43,16 +43,20 @@ namespace NetwerkFluss
             this.pictureButton = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.mapleOutputTextBox = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
+            this.mapleOutputTextBox = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.mengeLbl = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.kostenLbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,7 +68,7 @@ namespace NetwerkFluss
             // 
             this.button1.Location = new System.Drawing.Point(145, 65);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(117, 23);
+            this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
             this.button1.Text = "Matrix erstellen";
             this.button1.UseVisualStyleBackColor = true;
@@ -163,6 +167,7 @@ namespace NetwerkFluss
             // 
             // pictureButton
             // 
+            this.pictureButton.Enabled = false;
             this.pictureButton.Location = new System.Drawing.Point(625, 5);
             this.pictureButton.Name = "pictureButton";
             this.pictureButton.Size = new System.Drawing.Size(88, 23);
@@ -179,6 +184,7 @@ namespace NetwerkFluss
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Enabled = false;
             this.tabControl1.Location = new System.Drawing.Point(12, 94);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -197,17 +203,6 @@ namespace NetwerkFluss
             this.tabPage1.Text = "Matrix";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.mapleTextBox);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(703, 312);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Maple Input";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
@@ -224,8 +219,23 @@ namespace NetwerkFluss
             this.dataGridView1.Size = new System.Drawing.Size(691, 276);
             this.dataGridView1.TabIndex = 1;
             // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.mapleTextBox);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(703, 312);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Maple Input";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.kostenLbl);
+            this.tabPage3.Controls.Add(this.mengeLbl);
+            this.tabPage3.Controls.Add(this.label7);
+            this.tabPage3.Controls.Add(this.label5);
             this.tabPage3.Controls.Add(this.button3);
             this.tabPage3.Controls.Add(this.mapleOutputTextBox);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
@@ -235,6 +245,16 @@ namespace NetwerkFluss
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Maple Output";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(622, 6);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 1;
+            this.button3.Text = "Bild erstellen";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // mapleOutputTextBox
             // 
@@ -249,15 +269,41 @@ namespace NetwerkFluss
             this.mapleOutputTextBox.Text = "{x46 = 6, x56 = 0, x12 = 0, x24 = 0, x32 = 0, x45 = 0, x13 = 6, x35 = 0, x34 = 6}" +
                 "";
             // 
-            // button3
+            // label5
             // 
-            this.button3.Location = new System.Drawing.Point(622, 6);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "Bild erstellen";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 11);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(149, 13);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Bei einer Transportmenge von";
+            // 
+            // mengeLbl
+            // 
+            this.mengeLbl.AutoSize = true;
+            this.mengeLbl.Location = new System.Drawing.Point(161, 11);
+            this.mengeLbl.Name = "mengeLbl";
+            this.mengeLbl.Size = new System.Drawing.Size(10, 13);
+            this.mengeLbl.TabIndex = 3;
+            this.mengeLbl.Text = "-";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(220, 11);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(151, 13);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "enstehen minimale Kosten von";
+            // 
+            // kostenLbl
+            // 
+            this.kostenLbl.AutoSize = true;
+            this.kostenLbl.Location = new System.Drawing.Point(377, 11);
+            this.kostenLbl.Name = "kostenLbl";
+            this.kostenLbl.Size = new System.Drawing.Size(10, 13);
+            this.kostenLbl.TabIndex = 3;
+            this.kostenLbl.Text = "-";
             // 
             // Form1
             // 
@@ -276,13 +322,13 @@ namespace NetwerkFluss
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Netzwerkflussproblem";
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
@@ -312,6 +358,10 @@ namespace NetwerkFluss
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox mapleOutputTextBox;
+        private System.Windows.Forms.Label mengeLbl;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label kostenLbl;
+        private System.Windows.Forms.Label label7;
     }
 }
 
