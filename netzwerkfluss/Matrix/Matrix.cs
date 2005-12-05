@@ -148,7 +148,7 @@ namespace LinearProgramming
             else
                 return null;
         }
-
+        
         #endregion
     }
 }

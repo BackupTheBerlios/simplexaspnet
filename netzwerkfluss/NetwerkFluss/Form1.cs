@@ -30,6 +30,7 @@ namespace NetwerkFluss
         private void button1_Click(object sender, EventArgs e)
         {
             this.matrixTable = new DataTable("matrix");
+            this.matrixButton.Enabled = false;
 
             int anzahl = Convert.ToInt32(knotenTextBox.Text);
 
@@ -116,9 +117,10 @@ namespace NetwerkFluss
         private void pictureButton_Click(object sender, EventArgs e)
         {
             PictureForm picForm = new PictureForm();
-            string path = "start.jpg";
-            picForm.ShowPicture(path);
-            this.createPicture("start");
+
+            this.createPicture("StartGraph");
+            picForm.ShowPicture("StartGraph.jpg");
+            
             picForm.Show();
 
             this.createPicture("start");
@@ -144,6 +146,13 @@ namespace NetwerkFluss
 
             this.mengeLbl.Text = mengeTextBox.Text;
             this.kostenLbl.Text = this.kosten.ToString();
+            
+            
+            PictureForm picForm = new PictureForm();
+            this.createPicture("OptimizedGraph");
+            picForm.ShowPicture("OptimizedGraph.jpg");
+
+            picForm.Show();
         }
 
         private double[,] AnalyzeMapleOutput(string _output)

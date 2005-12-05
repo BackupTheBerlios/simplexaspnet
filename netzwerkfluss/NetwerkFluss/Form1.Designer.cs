@@ -29,7 +29,7 @@ namespace NetwerkFluss
         private void InitializeComponent()
         {
             this.dataSet1 = new System.Data.DataSet();
-            this.button1 = new System.Windows.Forms.Button();
+            this.matrixButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.knotenTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -46,12 +46,12 @@ namespace NetwerkFluss
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.button3 = new System.Windows.Forms.Button();
-            this.mapleOutputTextBox = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.kostenLbl = new System.Windows.Forms.Label();
             this.mengeLbl = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.kostenLbl = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
+            this.mapleOutputTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -64,15 +64,15 @@ namespace NetwerkFluss
             // 
             this.dataSet1.DataSetName = "NewDataSet";
             // 
-            // button1
+            // matrixButton
             // 
-            this.button1.Location = new System.Drawing.Point(145, 65);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Matrix erstellen";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.matrixButton.Location = new System.Drawing.Point(145, 65);
+            this.matrixButton.Name = "matrixButton";
+            this.matrixButton.Size = new System.Drawing.Size(75, 23);
+            this.matrixButton.TabIndex = 1;
+            this.matrixButton.Text = "Matrix erstellen";
+            this.matrixButton.UseVisualStyleBackColor = true;
+            this.matrixButton.Click += new System.EventHandler(this.button1_Click);
             // 
             // label1
             // 
@@ -246,6 +246,42 @@ namespace NetwerkFluss
             this.tabPage3.Text = "Maple Output";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // kostenLbl
+            // 
+            this.kostenLbl.AutoSize = true;
+            this.kostenLbl.Location = new System.Drawing.Point(377, 11);
+            this.kostenLbl.Name = "kostenLbl";
+            this.kostenLbl.Size = new System.Drawing.Size(10, 13);
+            this.kostenLbl.TabIndex = 3;
+            this.kostenLbl.Text = "-";
+            // 
+            // mengeLbl
+            // 
+            this.mengeLbl.AutoSize = true;
+            this.mengeLbl.Location = new System.Drawing.Point(161, 11);
+            this.mengeLbl.Name = "mengeLbl";
+            this.mengeLbl.Size = new System.Drawing.Size(10, 13);
+            this.mengeLbl.TabIndex = 3;
+            this.mengeLbl.Text = "-";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(220, 11);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(151, 13);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "enstehen minimale Kosten von";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 11);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(149, 13);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Bei einer Transportmenge von";
+            // 
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(622, 6);
@@ -269,42 +305,6 @@ namespace NetwerkFluss
             this.mapleOutputTextBox.Text = "{x46 = 6, x56 = 0, x12 = 0, x24 = 0, x32 = 0, x45 = 0, x13 = 6, x35 = 0, x34 = 6}" +
                 "";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 11);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(149, 13);
-            this.label5.TabIndex = 2;
-            this.label5.Text = "Bei einer Transportmenge von";
-            // 
-            // mengeLbl
-            // 
-            this.mengeLbl.AutoSize = true;
-            this.mengeLbl.Location = new System.Drawing.Point(161, 11);
-            this.mengeLbl.Name = "mengeLbl";
-            this.mengeLbl.Size = new System.Drawing.Size(10, 13);
-            this.mengeLbl.TabIndex = 3;
-            this.mengeLbl.Text = "-";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(220, 11);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(151, 13);
-            this.label7.TabIndex = 2;
-            this.label7.Text = "enstehen minimale Kosten von";
-            // 
-            // kostenLbl
-            // 
-            this.kostenLbl.AutoSize = true;
-            this.kostenLbl.Location = new System.Drawing.Point(377, 11);
-            this.kostenLbl.Name = "kostenLbl";
-            this.kostenLbl.Size = new System.Drawing.Size(10, 13);
-            this.kostenLbl.TabIndex = 3;
-            this.kostenLbl.Text = "-";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -320,7 +320,7 @@ namespace NetwerkFluss
             this.Controls.Add(this.knotenTextBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.matrixButton);
             this.Name = "Form1";
             this.Text = "Netzwerkflussproblem";
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).EndInit();
@@ -339,7 +339,7 @@ namespace NetwerkFluss
         #endregion
 
         private System.Data.DataSet dataSet1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button matrixButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox knotenTextBox;
         private System.Windows.Forms.Label label2;
