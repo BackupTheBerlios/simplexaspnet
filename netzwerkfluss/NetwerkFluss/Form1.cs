@@ -110,20 +110,24 @@ namespace NetwerkFluss
                                         Convert.ToInt32(this.senkeTextBox.Text));
 
             this.tabControl1.SelectedTab = this.tabPage2;
-            this.pictureButton.Enabled = true;
+            
+            //Bild erstellen / Anzeigen
+            PictureForm picForm = new PictureForm();
+
+            this.createPicture("StartGraph");
+            picForm.ShowPicture("StartGraph.jpg");
+
+            picForm.Show();
+
+            this.createPicture("start");
+            
+            
         }
 
 
         private void pictureButton_Click(object sender, EventArgs e)
         {
-            PictureForm picForm = new PictureForm();
 
-            this.createPicture("StartGraph");
-            picForm.ShowPicture("StartGraph.jpg");
-            
-            picForm.Show();
-
-            this.createPicture("start");
         }
 
         private void createPicture(string _name)
@@ -186,7 +190,7 @@ namespace NetwerkFluss
 
                     points[from - 1, to - 1] = 1;
 
-                    this.kosten += this.matrix.GetRow(from - 1).Values[to - 1];
+                    this.kosten += menge * this.matrix.GetRow(from - 1).Values[to - 1];
                 }
             }
 

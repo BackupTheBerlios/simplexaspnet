@@ -40,7 +40,6 @@ namespace NetwerkFluss
             this.mapleTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.mengeTextBox = new System.Windows.Forms.TextBox();
-            this.pictureButton = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -68,7 +67,7 @@ namespace NetwerkFluss
             // 
             this.matrixButton.Location = new System.Drawing.Point(145, 65);
             this.matrixButton.Name = "matrixButton";
-            this.matrixButton.Size = new System.Drawing.Size(75, 23);
+            this.matrixButton.Size = new System.Drawing.Size(105, 23);
             this.matrixButton.TabIndex = 1;
             this.matrixButton.Text = "Matrix erstellen";
             this.matrixButton.UseVisualStyleBackColor = true;
@@ -164,17 +163,6 @@ namespace NetwerkFluss
             this.mengeTextBox.TabIndex = 3;
             this.mengeTextBox.Text = "10";
             this.mengeTextBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
-            // pictureButton
-            // 
-            this.pictureButton.Enabled = false;
-            this.pictureButton.Location = new System.Drawing.Point(625, 5);
-            this.pictureButton.Name = "pictureButton";
-            this.pictureButton.Size = new System.Drawing.Size(88, 23);
-            this.pictureButton.TabIndex = 6;
-            this.pictureButton.Text = "Bild anzeigen";
-            this.pictureButton.UseVisualStyleBackColor = true;
-            this.pictureButton.Click += new System.EventHandler(this.pictureButton_Click);
             // 
             // tabControl1
             // 
@@ -284,11 +272,11 @@ namespace NetwerkFluss
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(622, 6);
+            this.button3.Location = new System.Drawing.Point(607, 6);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.Size = new System.Drawing.Size(90, 23);
             this.button3.TabIndex = 1;
-            this.button3.Text = "Bild erstellen";
+            this.button3.Text = "Graph erstellen";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
@@ -311,7 +299,6 @@ namespace NetwerkFluss
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(735, 444);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.pictureButton);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.senkeTextBox);
@@ -350,7 +337,6 @@ namespace NetwerkFluss
         private System.Windows.Forms.TextBox mapleTextBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox mengeTextBox;
-        private System.Windows.Forms.Button pictureButton;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.DataGridView dataGridView1;
