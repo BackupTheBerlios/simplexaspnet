@@ -31,14 +31,7 @@ public class NetBuilder
         Row row = new Row(nodes);
         FILE_NAME = _fileName;
 
-        if (File.Exists(FILE_NAME))
-        {
-            Console.WriteLine("{0} already exists.", FILE_NAME);
-            return;
-        }
-
-       
-        StreamWriter sr = File.CreateText(FILE_NAME);
+        System.IO.StreamWriter sr = new System.IO.StreamWriter(FILE_NAME, false );
         sr.WriteLine(" digraph G {\n size =\"" + number + "," + number + "\";");
         for (int i = 0; i < number; i++)
         {
@@ -66,21 +59,6 @@ public class NetBuilder
         sr.Close();
 
     }
-
-    // public void Build(double[,] _points, IMatrix _matrix, String _fileName)
-    //{
-    //    double[] nodes = new Double[number];
-    //    Row row = new Row(nodes);
-    //     for(int i = 0, i< _points.Length;i++)
-    //     {
-    //         for(int j = 0, j< _points.Length;j++)
-    //        {
-    //            if (_points.GetValue(i, j) >0)
-    //                _matrix.
-             
-    //    _points.GetValue(i);
-    //}
-
 
 
     /// <summary>
