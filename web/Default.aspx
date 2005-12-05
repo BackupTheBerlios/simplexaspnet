@@ -20,8 +20,7 @@ function DIV1_onclick() {
     <div>
         &nbsp;
         <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Reset" />
-        <asp:Label ID="lblResult" runat="server" Text="Label" Width="154px"></asp:Label>
-        <asp:Label ID="lblText" runat="server" Text="Label" Width="260px"></asp:Label>
+        &nbsp;
         <asp:MultiView ID="MultiView1" runat="server">
             <asp:View ID="View1" runat="server">
                 Anzahl der Variablen<asp:TextBox ID="VariablesTextBox" runat="server" Width="70px">4</asp:TextBox><br />
@@ -32,11 +31,7 @@ function DIV1_onclick() {
                 <br />
                 <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Feld erstellen" /></asp:View>
             <asp:View ID="View3" runat="server">
-            <asp:Button ID="Button1" runat="server"  Text="Button" OnClick="Button1_Click" />
-            Pivot Zeile:
-            <asp:TextBox ID="PivotRow" runat="server" Width="48px">1</asp:TextBox>Pivot Spalte:<asp:TextBox
-                ID="PivotColumn" runat="server" Width="38px">1</asp:TextBox>
-                <asp:Button ID="Button5" runat="server" OnClick="Button5_Click" Text="Next step" /><br />
+                <asp:Button ID="nextButton" runat="server" OnClick="Button5_Click" Text="Next step" /><br />
             <br />
             <asp:Panel ID="Panel1" runat="server" Height="228px" Width="431px">
             </asp:Panel>

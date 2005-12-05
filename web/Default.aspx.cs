@@ -22,12 +22,11 @@ public partial class _Default : Page
             // Recreate controls created on previous roundtrips
             if (Session["VarTextBoxes"] != null)
             {
-                this.VarTextBoxes = (TextBox[,])Session["VarTextBoxes"];
+                this.VarTextBoxes = (TextBox[,]) Session["VarTextBoxes"];
                 foreach (TextBox box in this.VarTextBoxes)
                 {
                     this.View2.Controls.Add(box);
                 }
-
             }
             //RecreatePersistedControls();
         }
@@ -80,13 +79,13 @@ public partial class _Default : Page
 
         Row[] rows = new Row[this.VarTextBoxes.GetLength(1)];
 
-        for (int y = 0; y < this.VarTextBoxes.GetLength(1); y++ )
+        for (int y = 0; y < this.VarTextBoxes.GetLength(1); y++)
         {
             double[] drow = new double[this.VarTextBoxes.GetLength(0)];
 
-            for (int x = 0; x < this.VarTextBoxes.GetLength(0);x++ )
+            for (int x = 0; x < this.VarTextBoxes.GetLength(0); x++)
             {
-                if (this.VarTextBoxes[x, y]== null )
+                if (this.VarTextBoxes[x, y] == null)
                 {
                     drow[x] = 0;
                 }
@@ -105,12 +104,6 @@ public partial class _Default : Page
             rows[y] = new Row(drow);
         }
 
-
-        //Row[] rows = new Row[3];
-        //rows[0] = new Row(new double[] { 1, 2, 3, 4, 5 });
-        //rows[1] = new Row(new double[] { 6, 7, 8, 9, 10 });
-        //rows[2] = new Row(new double[] { 11, 12, 13, 14, 15 });
-
         foreach (Row row in rows)
         {
             this.field.AddRow(row);
@@ -126,18 +119,23 @@ public partial class _Default : Page
         switch (state)
         {
             case "phase3nextstep":
-                this.field = (SimplexField)Session["field"];
+                this.field = (SimplexField) Session["field"];
 
                 simplex = new Simplex(this.field);
-                simplex.NextSetp();
+                simplex.NextStep();
                 this.field = simplex.Field;
 
                 this.DrawField();
                 this.MultiView1.SetActiveView(this.View3);
-                Session["field"]=this.field;
+                Session["field"] = this.field;
+                if (simplex.isComplete())
+                {
+                    this.nextButton.Enabled = false;
+                }
+
                 break;
             case "phase3refresh":
-                this.field = (SimplexField)Session["field"];
+                this.field = (SimplexField) Session["field"];
                 this.DrawField();
                 this.MultiView1.SetActiveView(this.View3);
                 break;
@@ -194,7 +192,7 @@ public partial class _Default : Page
         int y = Convert.ToInt32(this.BaseVarsTextBox.Text);
 
         if (Session["VarTextBoxes"] != null)
-            this.VarTextBoxes = (TextBox[,])Session["VarTextBoxes"];
+            this.VarTextBoxes = (TextBox[,]) Session["VarTextBoxes"];
         else
             this.VarTextBoxes = new TextBox[x + 1,y + 1];
 
@@ -210,7 +208,7 @@ public partial class _Default : Page
                 TableCell cell = new TableCell();
                 Label label = new Label();
 
-                if (VarTextBoxes[i2, i]==null)
+                if (VarTextBoxes[i2, i] == null)
                     VarTextBoxes[i2, i] = new TextBox();
 
                 VarTextBoxes[i2, i].Width = 30;
@@ -271,20 +269,15 @@ public partial class _Default : Page
 
     #region Event Handlers for new controls
 
-    private void Button_Click(object sender, EventArgs e)
-    {
-        this.lblResult.Text = ((Button) sender).Text + " clicked";
-    }
-
     private void TextBox_TextChanged(object sender, EventArgs e)
     {
         //this.lblText.Text = ((TextBox) sender).Text + " text changed";
         TextBox box = sender as TextBox;
-        if (this.Session["smatrix"]!=null)
+        if (this.Session["smatrix"] != null)
         {
-            if (this.Session["smatrix"]==null)
+            if (this.Session["smatrix"] == null)
                 this.Session["smatrix"] = new Hashtable();
-            
+
             Hashtable htable = (Hashtable) this.Session["smatrix"];
             htable[box.ID] = box.Text;
             this.Session["smatrix"] = htable;
@@ -298,10 +291,6 @@ public partial class _Default : Page
     {
         switch (handler)
         {
-            case "Click":
-                ((Button) ctl).Click += new EventHandler(this.Button_Click);
-                break;
-
             case "TextChanged":
                 ((TextBox) ctl).TextChanged += new EventHandler(this.TextBox_TextChanged);
                 break;
@@ -394,12 +383,14 @@ public partial class _Default : Page
         //this.Button1.Click += new System.EventHandler(this.Button_Click);
         this.Load += new EventHandler(this.Page_Load);
     }
+
     protected void Button1_Click(object sender, EventArgs e)
     {
         Session["state"] = "phase3refresh";
         // int count = this.VarTextBoxes.Length;
         this.ShowView();
     }
+
     protected void Button5_Click(object sender, EventArgs e)
     {
         Session["state"] = "phase3nextstep";

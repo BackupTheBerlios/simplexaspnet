@@ -1,14 +1,10 @@
-﻿using System;
-using System.Web.UI;
+﻿using System.Drawing;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-interface IHtmlBuilder
+
+internal interface IHtmlBuilder
 {
-    void Build(SimplexField field);
-
-    string GetHtml();
-
+    Color ForeColor { get; set; }
     Table GetTable();
-    
+    bool ShowColumnHeader { get; set; }
+    bool ShowRowHeader { get; set; }
 }
