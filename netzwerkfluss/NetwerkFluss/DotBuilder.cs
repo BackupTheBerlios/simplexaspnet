@@ -48,10 +48,12 @@ public class DotBuilder
 
                 if (row.Values[j] != -1)
                 {
-                    if (FILE_NAME == "OptimizedGraph.dot")
+                    if (_points == null)
                     {
                         if ((Double)_points.GetValue(i, j) > 0.0)
                             sr.WriteLine(" " + (i + 1) + " -> " + (j + 1) + " [label=\"" + row.Values[j] + "\",color=red];");
+                        else
+                            sr.WriteLine(" " + (i + 1) + " -> " + (j + 1) + " [label=\"" + row.Values[j] + "\"];");
                     }
                     else
                         sr.WriteLine(" " + (i + 1) + " -> " + (j + 1) + " [label=\"" + row.Values[j] + "\"];");
